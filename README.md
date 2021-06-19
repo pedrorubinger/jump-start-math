@@ -34,7 +34,7 @@ yarn start
 ```
 
 * ### Executando o cliente:
-Para executar o cliente, entre no diretório */jump-start-math-front* e execute esta linha de código no terminal, ela baixará as bibliotecas necessárias para a execução da *api*:
+Para executar o cliente, entre no diretório */jump-start-math-front* e execute esta linha de código no terminal, ela baixará as bibliotecas necessárias para a execução do cliente:
 
 ```
 yarn install
