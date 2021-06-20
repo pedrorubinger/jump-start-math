@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import * as Yup from 'yup';
 
+import contactSchema from '../../components/Forms/ContactForm/schema';
 import {
   ContactContainer,
   ContactContent,
@@ -8,11 +10,32 @@ import {
   ContactHeaderText,
 } from './styles'
 import ContactForm from '../../components/Forms/ContactForm';
+import { sendContactEmail } from '../../services/requests/contact';
 
 const Contact = () => {
-  /** TO DO: Implement form handler (react-hook-form | formik | unform) */
-  const onSubmit = (values) => {
-    console.log('submitted:', values)
+  const formRef = useRef();
+
+  const onSubmit = async (data) => {
+    console.log('submitted:', data)
+
+    try {
+      await contactSchema.validate(data, {
+        abortEarly: false,
+      });
+
+      /** TO DO: Submit form, handle response and displays feedback... */
+      const response = await sendContactEmail({ ...data });
+    } catch (err) {
+      const validationErrors = {};
+
+      if (err instanceof Yup.ValidationError) {
+        err.inner.forEach(error => {
+          validationErrors[error.path] = error.message;
+        });
+
+        formRef.current.setErrors(validationErrors);
+      }
+    }
   };
 
   return (
@@ -27,7 +50,7 @@ const Contact = () => {
       </ContactHeader>
 
       <ContactContent>
-        <ContactForm onSubmit={onSubmit} />
+        <ContactForm formRef={formRef} onSubmit={onSubmit} />
       </ContactContent>
     </ContactContainer>
   );

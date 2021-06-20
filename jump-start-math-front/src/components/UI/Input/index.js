@@ -1,22 +1,57 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import { useField } from '@unform/core'
 
-import { StyledInput, StyledTextArea } from './styles';
+import { StyledError, StyledInput, StyledTextArea } from './styles';
 
-const Input = ({
-  value = '',
-  type = 'text',
-  ...rest
-}) => {
-  if (type === 'select') {
-    /** TO DO: Implement select input... */
-  }
+const Input = ({ name, type = 'text', ...rest }) => {
+  const inputRef = useRef();
+  const { error, fieldName, registerField } = useField(name)
+
+  useEffect(() => {
+    registerField({
+      name: fieldName,
+      ref: inputRef,
+      getValue: ref => {
+        return ref.current.value
+      },
+      setValue: (ref, value) => {
+        ref.current.value = value
+      },
+      clearValue: ref => {
+        ref.current.value = ''
+      },
+    })
+  }, [fieldName, registerField])
 
   if (type === 'textarea') {
-    return <StyledTextArea value={value} {...rest} />;
+    return (
+      <>
+        <StyledTextArea
+          ref={inputRef}
+          name={name}
+          hasError={!!error}
+          {...rest}
+        />
+        {!!error && <StyledError>{error}</StyledError>}
+      </>
+    );
+  }
+
+  if (type === 'select') {
+    /** TO DO: Implement select input (suggestion: yarn add react-select)... */
   }
 
   return (
-    <StyledInput value={value} {...rest} />
+    <>
+      <StyledInput
+        type={type}
+        ref={inputRef}
+        name={name}
+        hasError={!!error}
+        {...rest}
+      />
+      {!!error && <StyledError>{error}</StyledError>}
+    </>
   );
 };
 

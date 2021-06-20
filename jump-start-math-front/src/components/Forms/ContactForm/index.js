@@ -1,14 +1,14 @@
 import React from 'react';
 
 import { StyledForm } from './styles';
+import Button from '../../UI/Button';
 import FormGroup from '../../UI/FormGroup';
 import Input from '../../UI/Input';
 import Label from '../../UI/Label';
-import Button from '../../UI/Button';
 
-const ContactForm = ({ onSubmit }) => {
+const ContactForm = ({ formRef, onSubmit }) => {
   return (
-    <StyledForm onSubmit={onSubmit}>
+    <StyledForm ref={formRef} onSubmit={onSubmit}>
       <FormGroup>
         <Label htmlFor="name" required>Nome</Label>
         <Input
