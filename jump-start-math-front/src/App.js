@@ -1,11 +1,10 @@
 import './App.css';
+import Router from './routes';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>Hello JumpStart <br />  Math</h1>
-      </header>
+      <Router />
     </div>
   );
 }
