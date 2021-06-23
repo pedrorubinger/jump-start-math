@@ -27,7 +27,7 @@ Depois de ter clonado o repositório, entre no diretório */jump-start-math-api*
 yarn install
 ```
 
-Em seguida, crie um arquivo .env (tome como base para os parâmetros o arquivo */.env.example*) com as configurações do seu banco de dados para poder realizar a conexão com a aplicação. Para receber emails da página de contato, é necessário inserir também no mesmo arquivo as credenciais da sua conta de email. Feito isso, execute a aplicação através do comando:
+Em seguida, crie um arquivo *.env* (tome como base para os parâmetros o arquivo *.env.example*) com as configurações do seu banco de dados para poder realizar a conexão com a aplicação. Para receber emails da página de contato, é necessário inserir também no mesmo arquivo as credenciais da sua conta de email. Feito isso, execute a aplicação através do comando:
 
 ```
 yarn start
