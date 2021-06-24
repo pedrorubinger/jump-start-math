@@ -1,16 +1,9 @@
-const express = require('express');
-const cors = require('cors');
+const app = require('./server');
 
-require('dotenv').config()
-
-const PORT = 3333;
+const PORT = 3334; // 3333
 const HOST = 'http://localhost';
-const app = express();
-const routes = require('./routes');
+const now = new Date().toLocaleString();
 
-app.use(cors());
-app.use(express.json());
-app.use(routes);
 app.listen(PORT, () => {
-  console.log(`[SERVER]: ${HOST}:${PORT} - ${new Date().toLocaleString()}`);
+  console.log(`Server is running at ${HOST}:${PORT} - ${now}`);
 });
