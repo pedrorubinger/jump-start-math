@@ -21,13 +21,13 @@ git clone https://github.com/pedrorubinger/jump-start-math.git
 ```
 
 * ### Executando a API:
-Depois de ter clonado o repositório entre no diretório */jump-start-math-api* e execute esta linha de código no terminal, ela baixará as bibliotecas necessárias para a execução da *api*:
+Depois de ter clonado o repositório, entre no diretório */jump-start-math-api* e execute esta linha de código no terminal, ela baixará as bibliotecas necessárias para a execução da *api*:
 
 ```
 yarn install
 ```
 
-Para executar, o comando é:
+Em seguida, crie um arquivo *.env* (tome como base para os parâmetros o arquivo *.env.example*) com as configurações do seu banco de dados para poder realizar a conexão com a aplicação. Para receber emails da página de contato, é necessário inserir também no mesmo arquivo as credenciais da sua conta de email. Feito isso, execute a aplicação através do comando:
 
 ```
 yarn start
