@@ -1,5 +1,6 @@
 import React from 'react';
 import "./home.css";
+import Markdown from '../../components/UI/Markdown';
 
 const Home = () => {
   return (
@@ -11,6 +12,7 @@ const Home = () => {
           <button className="saibaMais">
             SAIBA MAIS
           </button>
+          <Markdown fileName="home"/>
         </div>
       </div>
     </div>
