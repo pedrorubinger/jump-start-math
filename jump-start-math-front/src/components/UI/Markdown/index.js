@@ -7,7 +7,7 @@ const Markdown = (props) => {
 
   useEffect(() => {
     console.log('useEffect');
-    import(`../../../markdown/${file_name}.md`)
+    import(`../../../markdowns/${file_name}.md`)
       .then(res => {
         fetch(res.default)
           .then(res => res.text())
