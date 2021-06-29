@@ -1,7 +1,9 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
+import Swal from 'sweetalert2';
 import * as Yup from 'yup';
 
 import contactSchema from '../../components/Forms/ContactForm/schema';
+import { sendContactEmail } from '../../services/requests/contact';
 import {
   ContactContainer,
   ContactContent,
@@ -10,21 +12,26 @@ import {
   ContactHeaderText,
 } from './styles'
 import ContactForm from '../../components/Forms/ContactForm';
-import { sendContactEmail } from '../../services/requests/contact';
+import Toast from '../../components/UI/Toast';
 
 const Contact = () => {
   const formRef = useRef();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const onSubmit = async (data) => {
-    console.log('submitted:', data)
+    setIsSubmitting(true);
 
     try {
       await contactSchema.validate(data, {
         abortEarly: false,
       });
 
-      /** TO DO: Submit form, handle response and displays feedback... */
-      const response = await sendContactEmail({ ...data });
+      await sendContactEmail({ ...data });
+      formRef?.current?.reset();
+      Toast().fire({
+        icon: 'success',
+        title: 'Seu email foi enviado com sucesso!',
+      });
     } catch (err) {
       const validationErrors = {};
 
@@ -34,7 +41,17 @@ const Contact = () => {
         });
 
         formRef.current.setErrors(validationErrors);
+      } else {
+        Swal.fire({
+          title: 'Algo deu errado!',
+          text: 'Não foi possível enviar sua mensagem agora. Por favor, tente novamente mais tarde!',
+          icon: 'error',
+          showConfirmButton: true,
+          confirmButtonText: 'Entendi',
+        });
       }
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -50,7 +67,11 @@ const Contact = () => {
       </ContactHeader>
 
       <ContactContent>
-        <ContactForm formRef={formRef} onSubmit={onSubmit} />
+        <ContactForm
+          formRef={formRef}
+          isSubmitting={isSubmitting}
+          onSubmit={onSubmit}
+        />
       </ContactContent>
     </ContactContainer>
   );

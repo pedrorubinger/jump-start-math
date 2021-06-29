@@ -4,16 +4,22 @@ import styled from 'styled-components';
  * colors: primary, success, danger, warning, ....
  * sizes: x-sm, sm, md, lg, x-lg, ...
 */
+
 export const StyledButton = styled.button`
   background-color: ${({ color }) => color || '#282c34'};
   border-color: #282c34;
   color: #FFF;
   padding: 10px;
   font-size: 17px;
-  cursor: pointer;
+  cursor: ${({ disabled }) => disabled ? 'default' : 'pointer'};
   transition: .5s;
+  opacity: ${({ disabled }) => disabled ? .5 : 1};
 
   &:hover {
-    background-color: #1e2228;
+    background-color: ${({
+      disabled,
+      color,
+      hoverColor = '#1e2228',
+    }) => disabled ? color : hoverColor};
   }
 `;

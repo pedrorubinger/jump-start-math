@@ -2,9 +2,9 @@ import React from 'react';
 
 import { StyledButton } from './styles';
 
-const Button = ({ color, children, ...rest }) => {
+const Button = ({ color, children, disabled, ...rest }) => {
   return (
-    <StyledButton color={color} {...rest}>
+    <StyledButton color={color} {...rest} disabled={disabled}>
       {children}
     </StyledButton>
   );

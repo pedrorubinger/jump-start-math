@@ -6,7 +6,7 @@ import FormGroup from '../../UI/FormGroup';
 import Input from '../../UI/Input';
 import Label from '../../UI/Label';
 
-const ContactForm = ({ formRef, onSubmit }) => {
+const ContactForm = ({ formRef, onSubmit, isSubmitting }) => {
   return (
     <StyledForm ref={formRef} onSubmit={onSubmit}>
       <FormGroup>
@@ -54,8 +54,9 @@ const ContactForm = ({ formRef, onSubmit }) => {
         <Button
           type="submit"
           title="Clique para enviar um email para nós!"
+          disabled={isSubmitting}
         >
-          Enviar
+          {isSubmitting ? 'Enviando...' : 'Enviar'}
         </Button>
       </FormGroup>
     </StyledForm>
