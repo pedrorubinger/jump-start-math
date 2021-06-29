@@ -2,7 +2,7 @@
 
 ## João Vítor de Oliveira Carvalho
 
-[![image test](https://avatars.githubusercontent.com/u/37112993?v=4)](https://github.com/JVitorRetucci)
+[![João Vítor](https://avatars.githubusercontent.com/u/37112993?v=4)](https://github.com/JVitorRetucci)
 
 Conhecimento em C, Java, banco de dados relacionais, além do conhecimento aprendido na disciplina de Web 1: HTML, CSS e Javascript.
 
