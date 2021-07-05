@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, NavList, StyledLink, Home } from './styles';
 
-function Header() {
+function HeaderHome() {
   return (
     <Container>
       <nav>
@@ -17,4 +17,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default HeaderHome;

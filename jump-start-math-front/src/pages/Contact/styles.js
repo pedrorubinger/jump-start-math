@@ -4,7 +4,6 @@ import styled from 'styled-components';
 export const ContactContainer = styled.div`
   min-height: 100vh;
   background-color: #f4f4f4;
-  padding-bottom: 30px;
 `;
 
 export const ContactHeader = styled.div`

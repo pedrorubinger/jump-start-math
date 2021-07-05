@@ -12,6 +12,7 @@ export const Container = styled.div`
     font-family: 'Roboto', sans-serif;
     color: #FFF;
     width: 50%;
+    margin: 0 !important;
   }
 `;
 
@@ -25,6 +26,6 @@ export const Rights = styled.div`
   p {
     @import url('https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap');
     font-family: 'Roboto', sans-serif;
-
+    margin: 0 !important;
   }
 `;

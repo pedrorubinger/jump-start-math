@@ -13,6 +13,9 @@ import {
 } from './styles'
 import ContactForm from '../../components/Forms/ContactForm';
 import Toast from '../../components/UI/Toast';
+import Titles from '../../components/UI/Titles';
+import Header from '../../components/UI/Header';
+import Footer from '../../components/UI/Footer';
 
 const Contact = () => {
   const formRef = useRef();
@@ -57,14 +60,8 @@ const Contact = () => {
 
   return (
     <ContactContainer>
-      <ContactHeader>
-        <ContactHeaderTitle>
-          Precisa de nós? Entre em contato!
-        </ContactHeaderTitle>
-        <ContactHeaderText>
-          Preencha o formulário abaixo para enviar um email para a nossa equipe.
-        </ContactHeaderText>
-      </ContactHeader>
+      <Header />
+      <Titles titleName={'Precisa de nós? Entre em contato!'}/>
 
       <ContactContent>
         <ContactForm
@@ -73,6 +70,8 @@ const Contact = () => {
           onSubmit={onSubmit}
         />
       </ContactContent>
+
+      <Footer />
     </ContactContainer>
   );
 };
