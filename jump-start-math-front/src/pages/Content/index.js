@@ -4,12 +4,16 @@ import Titles from '../../components/UI/Titles';
 import Header from '../../components/UI/Header';
 import Footer from '../../components/UI/Footer';
 
+import { Container } from './styles';
+
 const Content = () => {
   return (
     <>
       <Header/>
       <Titles titleName={'Conteudo'} />
-      <Markdown fileName="content"/>
+      <Container>
+        <Markdown fileName="content"/>
+      </Container>
       <Footer/>
     </>
   );

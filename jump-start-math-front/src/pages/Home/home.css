@@ -1,14 +1,18 @@
-
-
 .divInicial{
     background-color: #282C34;
+    background-image: url('../../assets/home-bg.png');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
     width: 100%;
     height: auto;
     min-height: 100vh;
+    text-align: center;
 }
 
 .divCont{
-    min-height: 100vh;  
+    min-height: calc(100vh - 80px);  
 }
 
 .title{
@@ -23,15 +27,23 @@
     font-size: 48px;
     font-family: 'Roboto', sans-serif;
     font-weight: 900;
+    margin-bottom: 30px;
 }
 
 .saibaMais{
+    text-decoration: none;
     font-size: 64px;
     height: 100px;
     width: 600px;
-    border: none;
+    background-color: #fff;
+    padding: 10px 40px;
     border-radius: 10px;
     font-family: 'Roboto', sans-serif;
     font-weight: 900;
-    margin-top: 20px;
+    color: #282C34;
+}
+
+.saibaMais:hover {
+    background-color: #eee;
+    color: #282C34;
 }
