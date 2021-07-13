@@ -3,7 +3,7 @@ import { Container, NavList, StyledLink, Home } from './styles';
 
 function HeaderHome() {
   
-  const [logCadast, setLogCadast] = useState(0);
+  const [logCadast, setLogCadast] = useState(false);
   const [email, setEmail] = useState();
   const [senha, setSenha] = useState();
   const [nome, setNome] = useState();
@@ -22,14 +22,14 @@ function HeaderHome() {
           <StyledLink to="/technologies">O Projeto</StyledLink>
           <StyledLink to="/team">Equipe</StyledLink>
           <StyledLink to="/contact">Contato</StyledLink>
-          <StyledLink data-bs-toggle="modal" data-bs-target="#exampleModal">Entrar/Cadastrar</StyledLink>
+          <StyledLink to="" data-bs-toggle="modal" data-bs-target="#exampleModal">Entrar/Cadastrar</StyledLink>
         </NavList>
       </nav>
-      <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div className="modal-dialog">
           {
-            logCadast === 0 &&
-            
+            logCadast === false &&
+
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title" id="exampleModalLabel">Entrar</h5>
@@ -55,6 +55,8 @@ function HeaderHome() {
             </div>
           }
           {
+            logCadast === true &&
+
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title" id="exampleModalLabel">Cadastro</h5>
