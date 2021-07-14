@@ -1,5 +1,6 @@
 import React,{useEffect, useState} from 'react';
 import { Container, NavList, StyledLink, Home } from './styles';
+import "../HeaderHome/headerHome.css"
 
 function HeaderHome() {
   
@@ -12,7 +13,20 @@ function HeaderHome() {
   console.log('oi');
   console.log(logCadast);
   
+  function toggleLogin(e){
+    e.preventDefault();
+    setLogCadast(true);
+  }
+  function toggleCadastro(e){
+    e.preventDefault();
+    setLogCadast(false);
+  }
+
   function autenticar(){
+
+  }
+
+  function cadastrar(){
 
   }
 
@@ -36,33 +50,72 @@ function HeaderHome() {
 
             (
               <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLabel">Cadastro</h5>
-                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div className="modal-header">
+                  <h5 className="modal-title" id="exampleModalLabel">Entrar</h5>
+                  <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div className="modal-body">
+                  <form className="form-signin mx-auto">
+                    <div className="form-label-group my-2">
+                        <input onChange={(e)=> setNome(e.target.value)} id="inputNome" className="form-control" placeholder="Nome"></input>
+                    </div>
+                    <div className="form-label-group my-2">
+                        <input onChange={(e)=> setEmail(e.target.value)} type="email" id="inputEmail" className="form-control" placeholder="Email"></input>
+                    </div>
+                    <div className="form-label-group my-2">
+                        <input onChange={(e)=> setSenha(e.target.value)} type="password" id="inputPassword" className="form-control" placeholder="Senha"></input>
+                    </div>
+                    <button className="btn btn-lg btn-primary btn-block loginBtn my-2" onClick={()=>cadastrar} type="button">Entrar</button>
+                    <div className="text-center">
+                        <p>Não possui Login?<button onClick={(e) => toggleCadastro(e)} className="btn btn-link">Cadastre-se aqui!</button></p>
+                    </div>
+                  </form>
+                </div>
               </div>
-              <div className="modal-body">
-                <form className="form-signin mx-auto">
-                  <div className="form-label-group my-2">
-                      <input onChange={(e)=> setNome(e.target.value)} id="inputNome" className="form-control" placeholder="Nome"></input>
-                  </div>
-                  <div className="form-label-group my-2">
-                      <input onChange={(e)=> setEmail(e.target.value)} type="email" id="inputEmail" className="form-control" placeholder="Email"></input>
-                  </div>
-                  <div className="form-label-group my-2">
-                      <input onChange={(e)=> setSenha(e.target.value)} type="password" id="inputPassword" className="form-control" placeholder="Senha"></input>
-                  </div>
-                  <button className="btn btn-lg btn-primary btn-block loginBtn my-2" onClick={autenticar} type="button">Entrar</button>
-                  <div className="text-center">
-                      <p>Não possui Login?<button onClick={() => setLogCadast(false)} className="btn btn-link">Cadastre-se aqui!</button></p>
-                  </div>
-                </form>
-              </div>
-            </div>
             )
 
             :
 
-            <h1>oie</h1>
+            (
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title" id="exampleModalLabel">Cadastro</h5>
+                  <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div className="modal-body">
+                  <form className="form-signin mx-auto">
+                    <div className="form-label-group my-2">
+                        <input onChange={(e)=> setNome(e.target.value)} id="inputNome" className="form-control" placeholder="Nome"></input>
+                    </div>
+                    <div className="form-label-group my-2">
+                        <input onChange={(e)=> setEmail(e.target.value)} type="email" id="inputEmail" className="form-control" placeholder="Email"></input>
+                    </div>
+                    <div className="form-label-group my-2">
+                        <input onChange={(e)=> setSenha(e.target.value)} type="password" id="inputPassword" className="form-control" placeholder="Senha"></input>
+                    </div>
+                    <div className="container d-flex mt-3">
+                      <h6>Cadastrar como:</h6>
+                    </div>
+                    <div className="form-check ms-1">
+                      <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
+                      <label className="form-check-label" for="flexRadioDefault1">
+                        Professor
+                      </label>
+                    </div>
+                    <div className="form-check ms-1">
+                      <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked/>
+                      <label className="form-check-label" for="flexRadioDefault2">
+                        Aluno
+                      </label>
+                    </div>
+                    <button className="btn btn-lg btn-primary btn-block loginBtn my-2" onClick={()=>cadastrar} type="button">Cadastrar</button>
+                    <div className="text-center">
+                        <p>Já possui Login?<button onClick={(e) => toggleLogin(e)} className="btn btn-link">Entre aqui!</button></p>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            )
             
           }
         </div>

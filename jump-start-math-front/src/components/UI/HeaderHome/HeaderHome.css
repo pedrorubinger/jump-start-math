@@ -1,0 +1,23 @@
+#flexRadioDefault1{
+    justify-content: left;
+    display: flex;
+
+}
+
+#flexRadioDefault2{
+    justify-content: left;
+    display: flex;
+
+}
+
+.form-check-label{
+    justify-content: left;
+    display: flex;
+    margin-top: 4px;
+    margin-left: 5px;
+}
+
+.form-check{
+    display: flex;
+    align-items: center;
+}
