@@ -1,6 +1,6 @@
 import React,{useEffect, useState} from 'react';
 import { Container, NavList, StyledLink, Home } from './styles';
-import "../HeaderHome/headerHome.css"
+import "../HeaderHome/HeaderHome.css"
 
 function HeaderHome() {
   
@@ -9,6 +9,8 @@ function HeaderHome() {
   const [senha, setSenha] = useState();
   const [nome, setNome] = useState();
   const [tipoUser, setTipoUser] = useState(0);
+  const [q1, setQ1] = useState("");
+  const [q2, setQ2] = useState("");
 
   console.log('oi');
   console.log(logCadast);
@@ -107,6 +109,15 @@ function HeaderHome() {
                       <label className="form-check-label" for="flexRadioDefault2">
                         Aluno
                       </label>
+                    </div>
+                    <div className="mt-3">
+                      <div className="form-label-group my-2">
+                        <label className="form-label">Qual o nome do seu primeiro animal de estimação?</label>
+                        <input onChange={(e)=> setQ1(e.target.value)} id="inputQ1" className="form-control"></input>
+                      </div><div className="form-label-group my-2">
+                        <label className="form-label">Qual o nome do sua primeira escola?</label>
+                        <input onChange={(e)=> setQ2(e.target.value)} id="inputQ2" className="form-control"></input>
+                      </div>
                     </div>
                     <button className="btn btn-lg btn-primary btn-block loginBtn my-2" onClick={()=>cadastrar} type="button">Cadastrar</button>
                     <div className="text-center">
