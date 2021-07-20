@@ -67,7 +67,7 @@ function Header() {
                     <div className="form-label-group my-2">
                         <input onChange={(e)=> setSenha(e.target.value)} type="password" id="inputPassword" className="form-control" placeholder="Senha"></input>
                     </div>
-                    <button className="btn btn-lg btn-primary btn-block loginBtn my-2" onClick={()=>cadastrar} type="button">Entrar</button>
+                    <button className="btn btn-lg btn-primary btn-block loginBtn my-2" onClick={()=>autenticar} type="button">Entrar</button>
                     <div className="text-center">
                         <p>Não possui Login?<button onClick={(e) => toggleCadastro(e)} className="btn btn-link">Cadastre-se aqui!</button></p>
                     </div>
