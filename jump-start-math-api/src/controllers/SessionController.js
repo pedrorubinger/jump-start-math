@@ -11,15 +11,15 @@ class SessionController {
       email,
     })
 
-    if (!user) {
-      return res.status(401).json({ error: 'User not found' });
+    if (user.length == 0) {
+      return res.status(400).json({ error: 'User not found' });
     }
 
-    if (!(await user.checkPassword(password))) {
+    if (!(await user[0].comparePassword(password))) {
       return res.status(401).json({ error: 'Password does not match' });
     }
 
-    const { id, name, type } = user;
+    const { id, name, teacher } = user[0];
 
     return res.json({
       user: {

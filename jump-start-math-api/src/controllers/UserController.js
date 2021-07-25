@@ -7,7 +7,7 @@ class UserController {
       email: req.body.email,
     });
 
-    if (userExists) {
+    if (userExists.length > 0) {
       return res.status(400).json({ error: 'User already exists' });
     }
 
@@ -28,19 +28,25 @@ class UserController {
       email: req.body.email,
     });
 
-    if (req.body.question != user.question || req.body.answer != user.answer) {
-      return res.status(400).json({ error: 'Validation Fails' });
+    if (req.body.password) {
+      if (req.body.question != user[0].question || req.body.answer != user[0].answer) {
+        return res.status(400).json({ error: 'Validation Fails' });
+      }
     }
 
-    const updatedUser = await User.findOneAndUpdate(
-      {email: req.body.email},
-      {
-        password: req.body.password
-      },
-      {
-        classroom: req.body.classroom
-      },
+    const updatedUser = await User.findOne(
+      {email: req.body.email}
     );
+
+    if (req.body.password) {
+      updatedUser.password = req.body.password;
+    }
+
+    if (req.body.classroom) {
+      updatedUser.classroom = req.body.classroom;
+    }
+
+    await updatedUser.save();
 
     return res.json(updatedUser);
 

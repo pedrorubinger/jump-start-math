@@ -22,4 +22,4 @@ class Database {
   }
 }
 
-module.export = new Database();
+module.exports = new Database();

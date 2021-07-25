@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt'), SALT_WORK_FACTOR = 10;
+const bcrypt = require('bcryptjs'), SALT_WORK_FACTOR = 10;
 
 const UserSchema = new mongoose.Schema(
   {
@@ -58,11 +58,8 @@ UserSchema.pre('save', function(next) {
   });
 });
    
-UserSchema.methods.comparePassword = function(candidatePassword, cb) {
-  bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
-      if (err) return cb(err);
-      cb(null, isMatch);
-  });
-};
+UserSchema.methods.comparePassword = function(data) {
+  return bcrypt.compare(data, this.password);
+}
 
 module.exports = mongoose.model('User', UserSchema);
