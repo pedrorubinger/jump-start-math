@@ -13,7 +13,9 @@ class ClassroomController {
 
   async fetchClassroomsByTeacherId(req, res) {
     try {
-      const classrooms = await Classroom.find().where('teacher_id').equals(req.params.teacher_id);
+      const classrooms = await Classroom.find()
+        .where('teacher_id')
+        .equals(req.params.teacher_id);
 
       return res.status(200).json({ classrooms });
     } catch (error) {
