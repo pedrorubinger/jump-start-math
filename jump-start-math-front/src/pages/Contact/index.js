@@ -4,13 +4,7 @@ import * as Yup from 'yup';
 
 import contactSchema from '../../components/Forms/ContactForm/schema';
 import { sendContactEmail } from '../../services/requests/contact';
-import {
-  ContactContainer,
-  ContactContent,
-  ContactHeader,
-  ContactHeaderTitle,
-  ContactHeaderText,
-} from './styles'
+import { ContactContainer, ContactContent } from './styles'
 import ContactForm from '../../components/Forms/ContactForm';
 import Toast from '../../components/UI/Toast';
 import Titles from '../../components/UI/Titles';
