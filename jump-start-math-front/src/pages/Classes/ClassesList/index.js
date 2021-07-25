@@ -1,48 +1,148 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Table } from 'antd';
-import { Button, Modal } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
+import Swal from 'sweetalert2';
+import * as Yup from 'yup';
 
+import {
+  archiveClassroom,
+  storeClassroom,
+} from '../../../services/requests/classroom';
+import classroomSchema from './schema';
 import { Container } from './styles';
+import Toast from '../../../components/UI/Toast';
 import AddClassForm from '../../../components/Forms/AddClassForm';
 import ListHeader from '../../../components/UI/ListHeader';
 import ActionButton from '../../../components/UI/ActionButton';
 
-const columns = [
-  {
-    title: 'Código',
-    dataIndex: 'code',
-    key: 'code',
-  },
-  {
-    title: 'Descrição',
-    dataIndex: 'description',
-    key: 'description',
-  },
-  {
-    title: 'Data de Criação',
-    dataIndex: 'created_at',
-    key: 'created_at',
-  },
-  {
-    title: 'Ações',
-    dataIndex: 'actions',
-    key: 'actions',
-    render: (text, record) => (
-      <>
-        {console.log(text, record)}
-        <ActionButton
-          title="Clique para arquivar esta turma"
-          bgColor="#f74c4c"
-        >
-          Arquivar
-        </ActionButton>
-      </>
-    ),
-  }
-];
-
-const ClassesList = ({ records = [] }) => {
+const ClassesList = ({ records = [], setRecords, teacherId }) => {
+  const formRef = useRef();
   const [modalIsVisible, setModalIsVisible] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const columns = [
+    {
+      title: 'Código',
+      dataIndex: 'code',
+      key: 'code',
+    },
+    {
+      title: 'Status',
+      dataIndex: 'is_active',
+      key: 'is_active',
+      render: (classroomIsActive) => classroomIsActive ? 'Ativa' : 'Arquivada',
+    },
+    {
+      title: 'Descrição',
+      dataIndex: 'description',
+      key: 'description',
+      render: (description) => description || 'Não Fornecida'
+    },
+    {
+      title: 'Data de Criação',
+      dataIndex: 'createdAt',
+      key: 'createdAt',
+      render: (text) => new Date(text).toLocaleDateString(),
+    },
+    {
+      title: 'Ações',
+      dataIndex: 'actions',
+      key: 'actions',
+      render: (text, record) => (
+        <ActionButton
+          title={record.is_active
+            ? 'Clique para arquivar esta turma'
+            : 'Clique para reativar esta turma'
+          }
+          bgColor={record.is_active ? '#f74c4c' : 'green'}
+          onClick={async () => {
+            const { isConfirmed } = await Swal.fire({
+              title: 'Você tem certeza?',
+              text: record.is_active
+                ? 'Tem certeza que pretende arquivar esta turma?'
+                : 'Tem certeza que pretende reativar esta turma?',
+              showCancelButton: true,
+              cancelButtonText: record.is_active
+                ? 'Não, manter turma ativa'
+                : 'Não, manter turma inativa',
+              showConfirmButton: true,
+              confirmButtonText: record.is_active
+                ? 'Sim, arquivar turma'
+                : 'Sim, reativar turma'
+            });
+  
+            if (isConfirmed) {
+              try {
+                const newStatus = !record.is_active;
+
+                await archiveClassroom(record.code, {
+                  is_active: newStatus,
+                });
+  
+                const updatedRecords = [...records].map((item) => {
+                  if (item.code === record.code) {
+                    return { ...item, is_active: newStatus };
+                  }
+
+                  return item;
+                });
+
+                setRecords(updatedRecords);
+              } catch (error) {
+                Swal.fire({
+                  title: 'Erro ao alterar o status desta turma!',
+                  text:
+                    'Desculpe, um erro aconteceu ao alterar o status da turma. Por favor, tente novamente mais tarde ou contate-nos.',
+                  icon: 'error',
+                });
+              }
+            }
+          }}
+        >
+          {record.is_active ? 'Arquivar' : 'Ativar'}
+        </ActionButton>
+      ),
+    }
+  ];
+
+  const onSubmit = async (values) => {
+    try {
+      setIsSubmitting(true);
+      await classroomSchema.validate(values, { abortEarly: false });
+      
+      const response = await storeClassroom({
+        name: values.name,
+        code: values.code,
+        description: values.description || '',
+        teacher_id: teacherId,
+      });
+
+      Toast().fire({
+        icon: 'success',
+        title: 'Essa turma foi cadastrada com sucesso!',
+      });
+      setRecords([...records, { ...response.data }]);
+      setModalIsVisible(false);
+    } catch (err) {
+      const validationErrors = {};
+
+      if (err instanceof Yup.ValidationError) {
+        err.inner.forEach(error => {
+          validationErrors[error.path] = error.message;
+        });
+
+        formRef.current.setErrors(validationErrors);
+      } else {
+        Swal.fire({
+          title: 'Erro ao cadastrar nova turma!',
+          text:
+            'Desculpe, um erro aconteceu ao cadastrar esta turma. Por favor, tente novamente mais tarde ou contate-nos.',
+          icon: 'error',
+        });
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <Container>
@@ -55,7 +155,11 @@ const ClassesList = ({ records = [] }) => {
           <Modal.Title>Cadastrar Turma</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <AddClassForm />
+          <AddClassForm
+            formRef={formRef}
+            isSubmitting={isSubmitting}
+            onSubmit={onSubmit}
+          />
         </Modal.Body>
       </Modal>
       
@@ -74,7 +178,7 @@ const ClassesList = ({ records = [] }) => {
       <Table
         columns={columns}
         dataSource={records}
-        rowKey={(data) => data.id}
+        rowKey={(data) => data.code}
       />
     </Container>
   );

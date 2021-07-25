@@ -27,7 +27,6 @@ const ClassForm = ({ formRef, onSubmit, isSubmitting }) => {
           name="code"
           id="code"
           placeholder="Código da Turma"
-          autoFocus
         />
       </FormGroup>
 

@@ -11,6 +11,14 @@ class Database {
       useFindAndModify: true,
       useUnifiedTopology: true,
     });
+
+    const db = mongoose.connection;
+
+    db.on(
+      'error',
+      (error) => console.log('Error trying to connect to database:', error)
+    );
+    db.once('open', () => console.log('MongoDB: Successfully connected.'));
   }
 }
 
