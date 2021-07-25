@@ -11,11 +11,21 @@ class ClassroomController {
     }
   }
 
+  async fetchClassroomsByTeacherId(req, res) {
+    try {
+      const classrooms = await Classroom.find().where('teacher_id').equals(req.params.teacher_id);
+
+      return res.status(200).json({ classrooms });
+    } catch (error) {
+      return res.status(500).json({ error });
+    }
+  }
+
   async store(req, res) {
-    const { code, description, name } = req.body;
+    const { code, description, name, teacher_id } = req.body;
 
     try {
-      if (!name || !code) {
+      if (!name || !code || !teacher_id) {
         return res.status(400).json({
           error: 'You must provide all required fields!',
         });
@@ -34,6 +44,7 @@ class ClassroomController {
         code,
         description,
         is_active: true,
+        teacher_id,
       });
 
       return res.status(201).json(classroom);

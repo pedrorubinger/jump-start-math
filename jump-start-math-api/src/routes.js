@@ -26,5 +26,9 @@ Router.put('/users', UserController.update);
 Router.get('/classroom', ClassroomController.index);
 Router.post('/classroom', ClassroomController.store);
 Router.put('/classroom/:code', ClassroomController.archive);
+Router.get(
+  '/classroom/teacher/:teacher_id',
+  ClassroomController.fetchClassroomsByTeacherId
+);
 
 module.exports = Router;

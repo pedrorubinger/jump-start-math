@@ -18,6 +18,10 @@ const ClassroomSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    teacher_id: {
+      type: String,
+      required: true,
+    }
   },
   {
     timestamps: true,
