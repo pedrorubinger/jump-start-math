@@ -12,9 +12,6 @@ function Header() {
   const [tipoUser, setTipoUser] = useState(0);
   const [q1, setQ1] = useState("");
   const [q2, setQ2] = useState("");
-
-  console.log('oi');
-  console.log(logCadast);
   
   function toggleLogin(e){
     e.preventDefault();
@@ -29,8 +26,21 @@ function Header() {
 
   }
 
-  function cadastrar(){
-
+  async function cadastrar(){
+    try{
+      const data = {
+        name: nome, 
+        email: email, 
+        password: senha, 
+        teacher: true, 
+        question: "Qual o nome do seu primeiro animal de estimação?", 
+        answer: q1
+      };
+  
+      await registerUser(data);
+    }catch (error){
+      console.log(error);
+    }
   }
   
   return (
@@ -120,7 +130,7 @@ function Header() {
                         <input onChange={(e)=> setQ2(e.target.value)} id="inputQ2" className="form-control"></input>
                       </div>
                     </div>
-                    <button className="btn btn-lg btn-primary btn-block loginBtn my-2" onClick={()=>cadastrar} type="button">Cadastrar</button>
+                    <button className="btn btn-lg btn-primary btn-block loginBtn my-2" onClick={()=>cadastrar()} type="button">Cadastrar</button>
                     <div className="text-center">
                         <p>Já possui Login?<button onClick={(e) => toggleLogin(e)} className="btn btn-link">Entre aqui!</button></p>
                     </div>

@@ -30,7 +30,20 @@ function HeaderHome() {
   }
 
   async function cadastrar(){
-    
+    try{
+      const data = {
+        name: nome, 
+        email: email, 
+        password: senha, 
+        teacher: true, 
+        question: "Qual o nome do seu primeiro animal de estimação?", 
+        answer: q1
+      };
+  
+      await registerUser(data);
+    }catch (error){
+      console.log(error);
+    }
   }
 
   return (
