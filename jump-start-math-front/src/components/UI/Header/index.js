@@ -12,7 +12,6 @@ function Header() {
   const [nome, setNome] = useState();
   const [tipoUser, setTipoUser] = useState(0);
   const [q1, setQ1] = useState("");
-  const [q2, setQ2] = useState("");
 
   const userLogado = useSelector(state => state.usuario.usuarioLogado);
   const userName = useSelector(state => state.usuario.usuarioNome);
@@ -30,6 +29,10 @@ function Header() {
   }
 
   function autenticar(){
+
+  }
+
+  function trocarSenha(){
 
   }
 
@@ -70,6 +73,34 @@ function Header() {
           }
         </NavList>
       </nav>
+
+      <div class="modal fade" id="recPassWordModal" tabindex="-1" aria-labelledby="recPassWordModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Recuperação de Senha</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div className="form-label-group my-2">
+                <input onChange={(e)=> setEmail(e.target.value)} type="email" id="inputEmail" className="form-control" placeholder="Email"></input>
+              </div>
+              <div className="form-label-group my-2">
+                <input onChange={(e)=> setSenha(e.target.value)} type="password" id="inputPassword" className="form-control" placeholder="Senha"></input>
+              </div>
+              <div className="mt-3">
+                <div className="form-label-group my-2">
+                  <label className="form-label">Qual o nome do seu primeiro animal de estimação?</label>
+                  <input onChange={(e)=> setQ1(e.target.value)} id="inputQ1" className="form-control"></input>
+                </div>
+              </div>
+
+              <button onClick={()=>trocarSenha} type="button" class="btn btn-primary">Trocar Senha</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div className="modal-dialog">
           {
@@ -94,6 +125,9 @@ function Header() {
                         <input onChange={(e)=> setSenha(e.target.value)} type="password" id="inputPassword" className="form-control" placeholder="Senha"></input>
                     </div>
                     <button className="btn btn-lg btn-primary btn-block loginBtn my-2" onClick={()=>cadastrar} type="button">Entrar</button>
+                    <div className="text-center">
+                        <p>Esqueceu sua senha?<div data-bs-target="#recPassWordModal" data-bs-toggle="modal" data-bs-dismiss="modal" className="btn btn-link">Recuperar senha.</div></p>
+                    </div>
                     <div className="text-center">
                         <p>Não possui Login?<button onClick={(e) => toggleCadastro(e)} className="btn btn-link">Cadastre-se aqui!</button></p>
                     </div>
@@ -140,9 +174,6 @@ function Header() {
                       <div className="form-label-group my-2">
                         <label className="form-label">Qual o nome do seu primeiro animal de estimação?</label>
                         <input onChange={(e)=> setQ1(e.target.value)} id="inputQ1" className="form-control"></input>
-                      </div><div className="form-label-group my-2">
-                        <label className="form-label">Qual o nome do sua primeira escola?</label>
-                        <input onChange={(e)=> setQ2(e.target.value)} id="inputQ2" className="form-control"></input>
                       </div>
                     </div>
                     <button className="btn btn-lg btn-primary btn-block loginBtn my-2" onClick={()=>cadastrar()} type="button">Cadastrar</button>
