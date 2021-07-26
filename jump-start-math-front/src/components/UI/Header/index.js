@@ -1,5 +1,6 @@
 import React,{useEffect, useState} from 'react';
 import { Container, NavList, StyledLink, Home } from './styles';
+import { registerUser } from '../../../services/requests/users';
 import "../Header/Header.css"
 
 function Header() {

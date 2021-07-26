@@ -1,6 +1,7 @@
 import React,{useEffect, useState} from 'react';
 import { Container, NavList, StyledLink, Home } from './styles';
 import "../HeaderHome/HeaderHome.css"
+import { registerUser } from '../../../services/requests/users';
 
 function HeaderHome() {
   
@@ -28,8 +29,8 @@ function HeaderHome() {
 
   }
 
-  function cadastrar(){
-
+  async function cadastrar(){
+    
   }
 
   return (
