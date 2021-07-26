@@ -7,10 +7,10 @@ import Classes from './pages/Classes';
 import Home from './pages/Home';
 import Team from './pages/Team';
 import Technologies from './pages/Technologies';
-import Student from './pages/Student';
-import Prof from './pages/Prof';
+import ProtectedRoute from './components/ProtectecRoute';
+// import Student from './pages/Student';
+// import Prof from './pages/Prof';
 
-/** TO DO: Implement protected routes... */
 const Router = () => {
   return (
     <BrowserRouter>
@@ -18,11 +18,17 @@ const Router = () => {
         <Route exact path="/" component={Home} />
         <Route exact path="/contact" component={Contact} />
         <Route exact path="/content" component={Content} />
-        <Route exact path="/classes" component={Classes} />
         <Route exact path="/team" component={Team} />
         <Route exact path="/technologies" component={Technologies} />
-        <Route exact path="/aluno/:idUser" component={Student} />
-        <Route exact path="/professor/:idUser" component={Prof} />
+        <ProtectedRoute
+          path="/teacher/classes"
+          component={Classes}
+          permissions={['teacher']}
+          exact
+          isPrivate
+        />
+        {/* <Route exact path="/aluno/:idUser" component={Student} />
+        <Route exact path="/professor/:idUser" component={Prof} /> */}
       </Switch>
     </BrowserRouter>
   );
