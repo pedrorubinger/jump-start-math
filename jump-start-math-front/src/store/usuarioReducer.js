@@ -1,5 +1,5 @@
 const INITIAL_STATE ={
-    usuarioLogado: 0,
+    usuarioLogado: 1,
     usuarioNome: "ata",
     usuarioTipo: 1,
     // 0 = Aluno, 1 = professor
