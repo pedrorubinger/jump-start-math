@@ -1,12 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import "./home.css";
 import Markdown from '../../components/UI/Markdown';
 import HeaderHome from '../../components/UI/HeaderHome';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const Home = () => {
+
+  const userLogado = useSelector(state => state.usuario.usuarioLogado);
+  const userId = useSelector(state => state.usuario.usuarioId);
+  const tipoUser = useSelector(state => state.usuario.usuarioTipo);
+
+  console.log(typeof userLogado);
+
   return (
     <div className="divInicial">
+
+      {
+        userLogado > 0 ?   
+        tipoUser > 1 ?
+            <Redirect to={{
+              pathname:`/professor/${userId}`
+            }} />
+          : <Redirect to={{
+            pathname:`/aluno/${userId}`
+          }} />
+        : null
+      }
+
       <HeaderHome />
       <div className="container d-flex align-items-center divCont">
         <div className="container">
