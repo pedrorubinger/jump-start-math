@@ -1,4 +1,5 @@
 import React,{useEffect, useState} from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Container, NavList, StyledLink, Home } from './styles';
 import { registerUser } from '../../../services/requests/users';
 import "../Header/Header.css"
@@ -12,6 +13,12 @@ function Header() {
   const [tipoUser, setTipoUser] = useState(0);
   const [q1, setQ1] = useState("");
   const [q2, setQ2] = useState("");
+
+  const userLogado = useSelector(state => state.usuario.usuarioLogado);
+  const userName = useSelector(state => state.usuario.usuarioNome);
+
+  const dispatch = useDispatch();
+
   
   function toggleLogin(e){
     e.preventDefault();
@@ -24,6 +31,10 @@ function Header() {
 
   function autenticar(){
 
+  }
+
+  function logout(){
+    dispatch({type: 'LOGOUT'})
   }
 
   async function cadastrar(){
@@ -52,7 +63,11 @@ function Header() {
           <StyledLink to="/technologies">O Projeto</StyledLink>
           <StyledLink to="/team">Equipe</StyledLink>
           <StyledLink to="/contact">Contato</StyledLink>
-          <StyledLink to="" data-bs-toggle="modal" data-bs-target="#exampleModal">Entrar/Cadastrar</StyledLink>
+          {
+            userLogado > 0 ?
+            <StyledLink to="/" onClick={logout} >{`${userName} - Logout`}</StyledLink>
+            : <StyledLink to="" data-bs-toggle="modal" data-bs-target="#exampleModal">Entrar/Cadastrar</StyledLink>
+          }
         </NavList>
       </nav>
       <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

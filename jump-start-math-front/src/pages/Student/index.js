@@ -1,8 +1,8 @@
 import react from 'react'
+import Header from '../../components/UI/Header'
 
-
-export default function Student(){
+export default function Student(match){
     return(
-        <h1>aaa</h1>
+        <Header/>
     )
 }
