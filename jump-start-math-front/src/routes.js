@@ -19,6 +19,7 @@ const Router = () => {
         <Route exact path="/classes" component={Classes} />
         <Route exact path="/team" component={Team} />
         <Route exact path="/technologies" component={Technologies} />
+        <Route exact path="/aluno" component={Technologies} />
       </Switch>
     </BrowserRouter>
   );
