@@ -200,7 +200,7 @@ function Header() {
                             validationErrors[error.path] = error.message;
                           });
                   
-                          signInFormRef.current.setErrors(validationErrors);
+                          signInFormRef?.current?.setErrors(validationErrors);
                         } else {
                           Swal.fire({
                             title: 'Erro ao logar!',
