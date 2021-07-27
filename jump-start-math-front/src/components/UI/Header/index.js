@@ -8,6 +8,7 @@ import '../Header/Header.css'
 import { logoutUser, setUser } from '../../../store/user';
 import { registerUser, signIn } from '../../../services/requests/users';
 import { Container, NavList, StyledLink, Home } from './styles';
+import Toast from '../../UI/Toast'
 import signInSchema from '../../Forms/SignInForm/schema';
 import SignInForm from '../../Forms/SignInForm';
 
@@ -60,13 +61,22 @@ function Header() {
       
       if(nome && email && senha && tipoUser !== undefined && q1.trim() !== ""){
         await registerUser(data);
-        console.log("Cadastrado com sucesso");
+        Toast().fire({
+          icon: 'success',
+          title: 'Cadastrado com sucesso.'
+        });
+        
       }else{
-        console.log("Não Cadastrado");
-        console.log(data);
+        Toast().fire({
+          icon: 'error',
+          title: 'Preencha todos os campos.'
+        });
       }
     }catch (error){
-      console.log(error);
+      Toast().fire({
+        icon: 'error',
+        title: error.data.error
+      });
     }
   }
 
