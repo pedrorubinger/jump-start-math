@@ -16,7 +16,7 @@ function Header() {
   const [email, setEmail] = useState();
   const [senha, setSenha] = useState();
   const [nome, setNome] = useState();
-  const [tipoUser, setTipoUser] = useState(false);
+  const [tipoUser, setTipoUser] = useState();
   const [q1, setQ1] = useState("");
   const signInFormRef = useRef();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -35,15 +35,10 @@ function Header() {
     setLogCadast(false);
   }
 
-  function autenticar () {}
-
   function trocarSenha() {}
 
   const trocarTipo = (e) => {
-    /* working on */
-    console.log(e.target.id);
     e.target.id === "flexRadioProfessor" ? setTipoUser(true) : setTipoUser(false);
-    console.log({tipo: tipoUser});
   }
   
   const logout = () => {
@@ -58,12 +53,18 @@ function Header() {
         name: nome, 
         email: email, 
         password: senha, 
-        teacher: true, 
-        question: tipoUser, 
+        teacher: tipoUser, 
+        question: "Qual o nome do seu primeiro animal de estimação?", 
         answer: q1
       };
       
-      console.log(data);
+      if(nome && email && senha && tipoUser !== undefined && q1.trim() !== ""){
+        await registerUser(data);
+        console.log("Cadastrado com sucesso");
+      }else{
+        console.log("Não Cadastrado");
+        console.log(data);
+      }
     }catch (error){
       console.log(error);
     }
@@ -247,13 +248,13 @@ function Header() {
                       <h6>Cadastrar como:</h6>
                     </div>
                     <div className="form-check ms-1">
-                      <input className="form-check-input" type="radio" name="flexRadio" id="flexRadioProfessor" onClick={trocarTipo}/>
+                      <input className="form-check-input" type="radio" name="flexRadio" id="flexRadioProfessor" onChange={trocarTipo}/>
                       <label className="form-check-label" htmlFor="flexRadioProfessor">
                         Professor
                       </label>
                     </div>
                     <div className="form-check ms-1">
-                      <input className="form-check-input" type="radio" name="flexRadio" id="flexRadioAluno" onClick={trocarTipo}/>
+                      <input className="form-check-input" type="radio" name="flexRadio" id="flexRadioAluno" onChange={trocarTipo}/>
                       <label className="form-check-label" htmlFor="flexRadioAluno">
                         Aluno
                       </label>
