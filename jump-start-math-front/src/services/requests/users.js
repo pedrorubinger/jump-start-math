@@ -6,3 +6,10 @@ export const registerUser = (data) =>
     method: 'POST',
     data
   });
+
+export const signIn = (data) =>
+  api.request({
+    url: '/sessions',
+    method: 'POST',
+    data,
+  });

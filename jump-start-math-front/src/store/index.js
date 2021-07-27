@@ -1,21 +1,15 @@
 import { createStore, combineReducers } from 'redux';
-import usuarioReducer from './usuarioReducer';
 import {persistReducer, persistStore} from 'redux-persist';
 import storage from 'redux-persist/lib/storage'
 
-const persistConfig = {
-    key: 'JumpStartMath',
-    storage,
-}
+import User from './user';
 
-const rootReducer = combineReducers({
-    usuario: usuarioReducer
-})
+const persistConfig = { key: 'JumpStartMath', storage };
+const rootReducer = combineReducers({ User });
 
-const persistedReducer = persistReducer(persistConfig, rootReducer)
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-const store = createStore(persistedReducer)
+const store = createStore(persistedReducer);
+const persistor = persistStore(store);
 
-const persistor = persistStore(store)
-
-export {store, persistor};
+export { store, persistor };

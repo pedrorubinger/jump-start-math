@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import { fetchClassroomsByTeacherId } from '../../services/requests/classroom';
 import Header from '../../components/UI/Header';
 import Titles from '../../components/UI/Titles';
 import ClassesList from './ClassesList/index';
 
-const teacherId = '60fde7aba2f6801118f46697'; // Pegar do reducer ou do decoded token....
-
 const Classes = () => {
+  const { user } = useSelector((state) => state.User);
+  const teacherId = user?.id;
   const [records, setRecords] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -23,12 +24,12 @@ const Classes = () => {
         setError(true);
       }
     })();
-  }, []);
+  }, [teacherId]);
 
   if (error) {
     return (
       <h2>
-        Desculpe, um erro ocorreu. Tente novamente mais tarde ou contate-nos.
+        Desculpe, um erro ocorreu ao buscar as turmas. Por favor, tente novamente mais tarde ou contate-nos.
       </h2>
     );
   }
