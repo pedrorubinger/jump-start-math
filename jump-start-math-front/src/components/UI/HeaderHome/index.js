@@ -203,6 +203,13 @@ function HeaderHome() {
                       }
                     }}
                   />
+
+                  <div className="text-center">
+                    <p>Esqueceu sua senha?<div data-bs-target="#recPassWordModal" data-bs-toggle="modal" data-bs-dismiss="modal" className="btn btn-link">Recuperar senha.</div></p>
+                  </div>
+                  <div className="text-center">
+                    <p>Não possui uma conta?<button onClick={(e) => toggleCadastro(e)} className="btn btn-link">Cadastre-se aqui!</button></p>
+                  </div>
                 </div>
               </div>
             )

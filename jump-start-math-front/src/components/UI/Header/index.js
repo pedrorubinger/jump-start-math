@@ -1,6 +1,7 @@
 import React, { useRef, useState} from 'react';
 import storage from 'redux-persist/lib/storage';
 import { useSelector, useDispatch } from 'react-redux';
+import Swal from 'sweetalert2';
 import * as Yup from 'yup';
 
 import '../Header/Header.css'
@@ -9,7 +10,6 @@ import { registerUser, signIn } from '../../../services/requests/users';
 import { Container, NavList, StyledLink, Home } from './styles';
 import signInSchema from '../../Forms/SignInForm/schema';
 import SignInForm from '../../Forms/SignInForm';
-import Swal from 'sweetalert2';
 
 function Header() {
   const [logCadast, setLogCadast] = useState(true);
@@ -213,6 +213,13 @@ function Header() {
                       }
                     }}
                   />
+
+                  <div className="text-center">
+                    <p>Esqueceu sua senha?<div data-bs-target="#recPassWordModal" data-bs-toggle="modal" data-bs-dismiss="modal" className="btn btn-link">Recuperar senha.</div></p>
+                  </div>
+                  <div className="text-center">
+                    <p>Não possui uma conta?<button onClick={(e) => toggleCadastro(e)} className="btn btn-link">Cadastre-se aqui!</button></p>
+                  </div>
                 </div>
               </div>
             )
