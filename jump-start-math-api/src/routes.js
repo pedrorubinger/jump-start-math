@@ -14,13 +14,14 @@ const authMiddleware = require('./middlewares/auth');
 
 /* CONTACT */
 Router.post('/contact', ContactController.store);
-Router.post('/users', UserController.store);
 Router.post('/sessions', SessionController.store);
+
+/* USER */
+Router.post('/users', UserController.store);
+Router.put('/users', UserController.update);
 
 Router.use(authMiddleware);
 
-/* USER */
-Router.put('/users', UserController.update);
 
 /* CLASSROOM */
 Router.get('/classroom', ClassroomController.index);

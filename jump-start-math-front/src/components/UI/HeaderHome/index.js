@@ -6,7 +6,7 @@ import * as Yup from 'yup';
 
 import '../HeaderHome/HeaderHome.css';
 import { logoutUser, setUser } from '../../../store/user';
-import { registerUser, signIn } from '../../../services/requests/users';
+import { registerUser, updatePassword, signIn } from '../../../services/requests/users';
 import { Container, NavList, StyledLink, Home } from './styles';
 import Toast from '../../UI/Toast'
 import signInSchema from '../../Forms/SignInForm/schema';
@@ -43,8 +43,36 @@ function HeaderHome() {
     e.target.id === "flexRadioProfessor" ? setTipoUser(true) : setTipoUser(false);
   }
 
-  function trocarSenha(){
+  async function trocarSenha() {
+    try{
 
+      const data = {
+        email: email,
+        password: senha,
+        question: "Qual o nome do seu primeiro animal de estimação?",
+        answer: q1
+      }
+
+      if(email && senha && q1.trim() !== ""){
+        console.log(data);
+        const response = await updatePassword(data);
+        // console.log(response);
+        Toast().fire({
+          icon: 'success',
+          title: 'Senha alterada com sucesso.'
+        });
+      }else{
+        Toast().fire({
+          icon: 'error',
+          title: 'Preencha todos os campos.'
+        });
+      }
+    }catch(error){
+      Toast().fire({
+        icon: 'error',
+        title: error.data?.error
+      });
+    }
   }
 
   async function cadastrar(){
@@ -74,7 +102,7 @@ function HeaderHome() {
     }catch (error){
       Toast().fire({
         icon: 'error',
-        title: error.data.error
+        title: error.data?.error
       });
     }
   }
@@ -142,7 +170,7 @@ function HeaderHome() {
                 <input onChange={(e)=> setEmail(e.target.value)} type="email" id="inputEmail" className="form-control" placeholder="Email"></input>
               </div>
               <div className="form-label-group my-2">
-                <input onChange={(e)=> setSenha(e.target.value)} type="password" id="inputPassword" className="form-control" placeholder="Senha"></input>
+                <input onChange={(e)=> setSenha(e.target.value)} type="password" id="inputPassword" className="form-control" placeholder="Nova Senha"></input>
               </div>
               <div className="mt-3">
                 <div className="form-label-group my-2">
@@ -151,7 +179,7 @@ function HeaderHome() {
                 </div>
               </div>
 
-              <button onClick={()=>trocarSenha} type="button" className="btn btn-primary">Trocar Senha</button>
+              <button onClick={()=>trocarSenha()} type="button" className="btn btn-primary">Trocar Senha</button>
             </div>
           </div>
         </div>
