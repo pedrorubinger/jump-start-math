@@ -3,13 +3,12 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import Contact from './pages/Contact';
 import Content from './pages/Content';
+import ClassSignIn from './pages/ClassSignIn';
 import Classes from './pages/Classes';
 import Home from './pages/Home';
 import Team from './pages/Team';
 import Technologies from './pages/Technologies';
 import ProtectedRoute from './components/ProtectecRoute';
-// import Student from './pages/Student';
-// import Prof from './pages/Prof';
 
 const Router = () => {
   return (
@@ -27,8 +26,13 @@ const Router = () => {
           exact
           isPrivate
         />
-        {/* <Route exact path="/aluno/:idUser" component={Student} />
-        <Route exact path="/professor/:idUser" component={Prof} /> */}
+        <ProtectedRoute
+          path="/student/class-sign-in"
+          component={ClassSignIn}
+          permissions={['student']}
+          exact
+          isPrivate
+        />
       </Switch>
     </BrowserRouter>
   );

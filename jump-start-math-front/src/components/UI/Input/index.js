@@ -5,7 +5,7 @@ import { StyledError, StyledInput, StyledTextArea } from './styles';
 
 const Input = ({ name, type = 'text', ...rest }) => {
   const inputRef = useRef();
-  const { error, fieldName, registerField } = useField(name)
+  const { error, fieldName, registerField } = useField(name);
 
   useEffect(() => {
     registerField({
@@ -35,10 +35,6 @@ const Input = ({ name, type = 'text', ...rest }) => {
         {!!error && <StyledError>{error}</StyledError>}
       </>
     );
-  }
-
-  if (type === 'select') {
-    /** TO DO: Implement select input (suggestion: yarn add react-select)... */
   }
 
   return (
