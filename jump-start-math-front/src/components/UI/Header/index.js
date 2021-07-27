@@ -16,7 +16,7 @@ function Header() {
   const [email, setEmail] = useState();
   const [senha, setSenha] = useState();
   const [nome, setNome] = useState();
-  // const [tipoUser, setTipoUser] = useState(0);
+  const [tipoUser, setTipoUser] = useState(false);
   const [q1, setQ1] = useState("");
   const signInFormRef = useRef();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -39,6 +39,13 @@ function Header() {
 
   function trocarSenha() {}
 
+  const trocarTipo = (e) => {
+    /* working on */
+    console.log(e.target.id);
+    e.target.id === "flexRadioProfessor" ? setTipoUser(true) : setTipoUser(false);
+    console.log({tipo: tipoUser});
+  }
+  
   const logout = () => {
     storage.removeItem('JumpStartMath');
     localStorage.clear();
@@ -52,11 +59,11 @@ function Header() {
         email: email, 
         password: senha, 
         teacher: true, 
-        question: "Qual o nome do seu primeiro animal de estimação?", 
+        question: tipoUser, 
         answer: q1
       };
-  
-      await registerUser(data);
+      
+      console.log(data);
     }catch (error){
       console.log(error);
     }
@@ -113,7 +120,7 @@ function Header() {
         </NavList>
       </nav>
 
-      <div className="modal fade" id="recPassWordModal" tabindex="-1" aria-labelledby="recPassWordModalLabel" aria-hidden="true">
+      <div className="modal fade" id="recPassWordModal" tabIndex="-1" aria-labelledby="recPassWordModalLabel" aria-hidden="true">
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
@@ -233,14 +240,14 @@ function Header() {
                       <h6>Cadastrar como:</h6>
                     </div>
                     <div className="form-check ms-1">
-                      <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
-                      <label className="form-check-label" for="flexRadioDefault1">
+                      <input className="form-check-input" type="radio" name="flexRadio" id="flexRadioProfessor" onClick={trocarTipo}/>
+                      <label className="form-check-label" htmlFor="flexRadioProfessor">
                         Professor
                       </label>
                     </div>
                     <div className="form-check ms-1">
-                      <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked/>
-                      <label className="form-check-label" for="flexRadioDefault2">
+                      <input className="form-check-input" type="radio" name="flexRadio" id="flexRadioAluno" onClick={trocarTipo}/>
+                      <label className="form-check-label" htmlFor="flexRadioAluno">
                         Aluno
                       </label>
                     </div>
