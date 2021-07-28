@@ -22,7 +22,7 @@ const ClassSignIn = () => {
   const formRef = useRef();
   const { user } = useSelector((state) => state.User);
   const classSignInSchema = Yup.object().shape({
-    class_code: Yup.string().required('Informe o código da turma!')
+    classroom_code: Yup.string().required('Informe o código da turma!')
   });
 
   const onSubmit = async (values) => {

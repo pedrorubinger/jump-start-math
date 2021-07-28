@@ -6,7 +6,7 @@ import api from '../api';
  */
 export const signInClass = (id, data) =>
   api.request({
-    url: `/students/${id}`,
+    url: `/students`,
     method: 'PUT',
     data,
   });
