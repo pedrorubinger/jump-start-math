@@ -8,6 +8,7 @@ const ContactController = require('./controllers/ContactController');
 const ClassroomController = require('./controllers/ClassroomController');
 const UserController = require('./controllers/UserController');
 const SessionController = require('./controllers/SessionController');
+const StudentController = require('./controllers/StudentController');
 
 /* MIDDLEWARES */
 const authMiddleware = require('./middlewares/auth');
@@ -21,6 +22,9 @@ Router.post('/users', UserController.store);
 Router.put('/users', UserController.update);
 
 Router.use(authMiddleware);
+
+/* Student */
+Router.put('/students', StudentController.update);
 
 
 /* CLASSROOM */

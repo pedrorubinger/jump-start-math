@@ -29,7 +29,7 @@ const UserSchema = new mongoose.Schema(
       required: true,
     },
     classroom: {
-      type: Number,
+      type: String,
       required: false,
     }
   },

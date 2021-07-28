@@ -42,10 +42,6 @@ class UserController {
       updatedUser.password = req.body.password;
     }
 
-    if (req.body.classroom) {
-      updatedUser.classroom = req.body.classroom;
-    }
-
     await updatedUser.save();
 
     return res.json(updatedUser);
