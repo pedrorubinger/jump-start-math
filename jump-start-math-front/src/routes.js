@@ -5,6 +5,7 @@ import Contact from './pages/Contact';
 import Content from './pages/Content';
 import ClassSignIn from './pages/ClassSignIn';
 import Classes from './pages/Classes';
+import ClassesReports from './pages/Reports/Classes';
 import Home from './pages/Home';
 import Team from './pages/Team';
 import Technologies from './pages/Technologies';
@@ -19,6 +20,13 @@ const Router = () => {
         <Route exact path="/content" component={Content} />
         <Route exact path="/team" component={Team} />
         <Route exact path="/technologies" component={Technologies} />
+        <Route
+          path="/teacher/class/report"
+          component={ClassesReports}
+          permissions={['teacher']}
+          exact
+          isPrivate
+        />
         <ProtectedRoute
           path="/teacher/classes"
           component={Classes}
