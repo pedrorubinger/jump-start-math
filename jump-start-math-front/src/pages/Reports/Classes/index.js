@@ -7,11 +7,12 @@ import Header from '../../../components/UI/Header';
 import Titles from '../../../components/UI/Titles';
 import ListHeader from '../../../components/UI/ListHeader';
 import ActionButton from '../../../components/UI/ActionButton';
+import Swal from 'sweetalert2';
 
 const ClassesReports = () => {
   const { location } = useHistory();
   const id = location?.state?.id;
-  const records = [
+  const records = [ // fetch from api
     {
       id: 1,
       student: 'Pedro Henrique Pimenta Rubinger',
@@ -89,9 +90,22 @@ const ClassesReports = () => {
       <Container>
         <ListHeader
           length={records.length}
-          emptyMsg="Ainda não há relatórios disponíveis."
-          msg={`Atualmente há ${records.length} relatório(s).`}
+          emptyMsg="Ainda não há relatórios de alunos disponíveis."
+          msg={`Atualmente estão disponíveis os relatórios de ${records.length} aluno(s).`}
           title="Relatórios"
+          addButton={{
+            visible: true,
+            title: 'Clique para ver o relatório geral desta turma',
+            value: 'Relatório da Turma',
+            onClick: () => Swal.fire({
+              title: 'Relatório Geral da Turma',
+              text: 'A turma X teve ao todo 12 tentativas e um tempo médio de 4 minutos e 22 segundos para resolver o exercício.',
+              showCancelButton: false,
+              showConfirmButton: true,
+              confirmButtonText: 'Ok',
+              icon: 'info',
+            }),
+          }}
         />
         <Table
           columns={columns}
