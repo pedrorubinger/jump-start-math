@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { Table } from 'antd';
 import { Modal } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import * as Yup from 'yup';
 
@@ -10,13 +11,14 @@ import {
 } from '../../../services/requests/classroom';
 import classroomSchema from './schema';
 import { Container } from './styles';
-import Toast from '../../../components/UI/Toast';
+import ActionButton from '../../../components/UI/ActionButton';
 import AddClassForm from '../../../components/Forms/AddClassForm';
 import ListHeader from '../../../components/UI/ListHeader';
-import ActionButton from '../../../components/UI/ActionButton';
+import Toast from '../../../components/UI/Toast';
 
 const ClassesList = ({ records = [], setRecords, teacherId }) => {
   const formRef = useRef();
+  const history = useHistory();
   const [modalIsVisible, setModalIsVisible] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const columns = [
@@ -48,58 +50,69 @@ const ClassesList = ({ records = [], setRecords, teacherId }) => {
       dataIndex: 'actions',
       key: 'actions',
       render: (text, record) => (
-        <ActionButton
-          title={record.is_active
-            ? 'Clique para arquivar esta turma'
-            : 'Clique para reativar esta turma'
-          }
-          bgColor={record.is_active ? '#f74c4c' : 'green'}
-          onClick={async () => {
-            const { isConfirmed } = await Swal.fire({
-              title: 'Você tem certeza?',
-              text: record.is_active
-                ? 'Tem certeza que pretende arquivar esta turma?'
-                : 'Tem certeza que pretende reativar esta turma?',
-              showCancelButton: true,
-              cancelButtonText: record.is_active
-                ? 'Não, manter turma ativa'
-                : 'Não, manter turma inativa',
-              showConfirmButton: true,
-              confirmButtonText: record.is_active
-                ? 'Sim, arquivar turma'
-                : 'Sim, reativar turma'
-            });
-  
-            if (isConfirmed) {
-              try {
-                const newStatus = !record.is_active;
-
-                await archiveClassroom(record.code, {
-                  is_active: newStatus,
-                });
-  
-                const updatedRecords = [...records].map((item) => {
-                  if (item.code === record.code) {
-                    return { ...item, is_active: newStatus };
-                  }
-
-                  return item;
-                });
-
-                setRecords(updatedRecords);
-              } catch (error) {
-                Swal.fire({
-                  title: 'Erro ao alterar o status desta turma!',
-                  text:
-                    'Desculpe, um erro aconteceu ao alterar o status da turma. Por favor, tente novamente mais tarde ou contate-nos.',
-                  icon: 'error',
-                });
-              }
+        <>
+          <ActionButton
+            title={record.is_active
+              ? 'Clique para arquivar esta turma'
+              : 'Clique para reativar esta turma'
             }
-          }}
-        >
-          {record.is_active ? 'Arquivar' : 'Ativar'}
-        </ActionButton>
+            bgColor={record.is_active ? '#f74c4c' : 'green'}
+            onClick={async () => {
+              const { isConfirmed } = await Swal.fire({
+                title: 'Você tem certeza?',
+                text: record.is_active
+                  ? 'Tem certeza que pretende arquivar esta turma?'
+                  : 'Tem certeza que pretende reativar esta turma?',
+                showCancelButton: true,
+                cancelButtonText: record.is_active
+                  ? 'Não, manter turma ativa'
+                  : 'Não, manter turma inativa',
+                showConfirmButton: true,
+                confirmButtonText: record.is_active
+                  ? 'Sim, arquivar turma'
+                  : 'Sim, reativar turma'
+              });
+    
+              if (isConfirmed) {
+                try {
+                  const newStatus = !record.is_active;
+
+                  await archiveClassroom(record.code, {
+                    is_active: newStatus,
+                  });
+    
+                  const updatedRecords = [...records].map((item) => {
+                    if (item.code === record.code) {
+                      return { ...item, is_active: newStatus };
+                    }
+
+                    return item;
+                  });
+
+                  setRecords(updatedRecords);
+                } catch (error) {
+                  Swal.fire({
+                    title: 'Erro ao alterar o status desta turma!',
+                    text:
+                      'Desculpe, um erro aconteceu ao alterar o status da turma. Por favor, tente novamente mais tarde ou contate-nos.',
+                    icon: 'error',
+                  });
+                }
+              }
+            }}
+          >
+            {record.is_active ? 'Arquivar' : 'Ativar'}
+          </ActionButton>
+          <ActionButton
+            title="Clique para ver o relatório desta turma"
+            style={{ marginLeft: 5 }}
+            onClick={() => history.push('/teacher/class/report', {
+              id: record._id,
+            })}
+          >
+            Relatório
+          </ActionButton>
+        </>
       ),
     }
   ];
