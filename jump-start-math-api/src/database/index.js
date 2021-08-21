@@ -3,7 +3,10 @@ const mongoose = require('mongoose');
 
 const databaseConfig = require('../config/database');
 
-const models = [];
+const Question = require('../models/Question');
+const Attempt = require('../models/Attempt');
+
+const models = [Question, Attempt];
 
 class Database {
   constructor() {

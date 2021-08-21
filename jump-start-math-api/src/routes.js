@@ -10,6 +10,9 @@ const UserController = require('./controllers/UserController');
 const SessionController = require('./controllers/SessionController');
 const StudentController = require('./controllers/StudentController');
 
+const QuestionController = require('./controllers/QuestionController');
+const AttemptController = require('./controllers/AttemptController');
+
 /* MIDDLEWARES */
 const authMiddleware = require('./middlewares/auth');
 
@@ -35,5 +38,11 @@ Router.get(
   '/classroom/teacher/:teacher_id',
   ClassroomController.fetchClassroomsByTeacherId
 );
+
+/* QUESTION */
+Router.post('/questions', QuestionController.store);
+
+/* ATTEMPT */
+Router.post('/attempts', AttemptController.store);
 
 module.exports = Router;
