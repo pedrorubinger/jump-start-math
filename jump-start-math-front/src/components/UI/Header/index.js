@@ -48,7 +48,7 @@ function Header() {
 
       if(email && senha && q1.trim() !== ""){
         console.log(data);
-        const response = await updatePassword(data);
+        await updatePassword(data);
         // console.log(response);
         Toast().fire({
           icon: 'success',
