@@ -1,16 +1,12 @@
 const Attempt = require('../models/Attempt');
 const Question = require('../models/Question');
 
-class AttemptController {
-  async store(req, res) {
-    const {id,tempoTentativa} = await Attempt.create(req.body);
+class AttemptUserController {
 
-    return res.json({id, tempoTentativa});
-  }
 
   async index(req, res) {
     const attempts = await Attempt.findAll({
-      where: {classId: req.params.class},
+      where: {userId: req.params.user},
       attributes: ['id','userId', 'userName', 'tempoTentativa'],
       include: [
         {
@@ -37,4 +33,4 @@ class AttemptController {
 
 }
 
-module.exports = new AttemptController();
+module.exports = new AttemptUserController();

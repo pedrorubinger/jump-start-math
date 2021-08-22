@@ -6,6 +6,7 @@ class QuestionController {
 
     return res.json({id, enunciado, respostaEsperada, acerto, tempoGasto});
   }
+
 }
 
 module.exports = new QuestionController();

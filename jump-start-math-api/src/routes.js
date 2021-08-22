@@ -12,6 +12,7 @@ const StudentController = require('./controllers/StudentController');
 
 const QuestionController = require('./controllers/QuestionController');
 const AttemptController = require('./controllers/AttemptController');
+const AttemptUserController = require('./controllers/AttemptUserController');
 
 /* MIDDLEWARES */
 const authMiddleware = require('./middlewares/auth');
@@ -44,5 +45,9 @@ Router.post('/questions', QuestionController.store);
 
 /* ATTEMPT */
 Router.post('/attempts', AttemptController.store);
+Router.get('/attempts/:class', AttemptController.index);
+
+/* ATTEMPT USER */
+Router.get('/userattempts/:user', AttemptUserController.index);
 
 module.exports = Router;
