@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import Header from "../../components/UI/Header";
 import Footer from "../../components/UI/Footer";
 import FormGroup from "../../components/UI/FormGroup";
@@ -6,12 +7,14 @@ import Button from "../../components/UI/Button";
 import Input from "../../components/UI/Input";
 import Label from "../../components/UI/Label";
 import Titles from "../../components/UI/Titles";
+import { sendQuestion, sendAttempt } from "../../services/requests/quiz";
 import { StyledForm } from "../../components/Forms/ContactForm/styles";
 import { Container, FooterContainer, Text } from "./styles";
 
 import QuestionsGenerator from "../../services/questions/generation";
 
 const Quiz = () => {
+  const { user } = useSelector((state) => state.User)
   const [questionStartTime, setQuestionStartTime] = useState(new Date());
   const [answer, setAnswer] = useState("");
   const [isLoading, setIsLoading] = useState(true);
@@ -31,31 +34,48 @@ const Quiz = () => {
   const handleSubmit = () => {
     if (current.id < questions.length - 1) {
       setIsLoading(true);
-      console.log({
+
+      questions[current.id].time = Math.abs(new Date() - questionStartTime);
+
+      sendQuestion({
         enunciado: current.text,
         nivel: current.nivel,
         resposta: answer,
         values: current.values,
-        tempoGasto: Math.abs(new Date() - questionStartTime),
+        tempoGasto: questions[current.id].time,
       });
-
+      
       setAnswer("");
       setCurrent(questions[current.id + 1]);
       setQuestionStartTime(new Date());
       setIsLoading(false);
     } else {
-      console.log({
+      
+      questions[current.id].time = Math.abs(new Date() - questionStartTime);
+
+      sendQuestion({
         enunciado: current.text,
         nivel: current.nivel,
         resposta: answer,
         values: current.values,
-        tempoGasto: Math.abs(new Date() - questionStartTime),
+        tempoGasto: questions[current.id].time,
       });
-
+      
       setIsFinished(true);
     }
   };
+  
+  const finishTry = () => {
+    let fullTime = 0;
 
+    for(let i = 0; i < questions.length; i++){
+      fullTime += questions[i].time;
+      console.log(fullTime, questions[i].time);
+    }
+    
+    console.log(fullTime);
+  }
+  
   return (
     <>
       <Header />
@@ -65,9 +85,10 @@ const Quiz = () => {
       <Container>
         {isLoading ? (
           "Carregando..."
-        ) : isFinished ? (
-          <h1>Parabéns, você terminou!</h1>
         ) : (
+          isFinished ? (
+            <h1>Acabou</h1>
+          ) : (
           <>
             <Text>{current.text}</Text>
 
@@ -92,7 +113,7 @@ const Quiz = () => {
               </FormGroup>
             </StyledForm>
           </>
-        )}
+        ))}
       </Container>
       <FooterContainer>
         <Footer />

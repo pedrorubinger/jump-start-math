@@ -17,7 +17,7 @@ const Router = () => {
     <BrowserRouter>
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route exact path="/quiz" component={Quiz} />
+        {/* <Route exact path="/quiz" component={Quiz} /> */}
         <Route exact path="/contact" component={Contact} />
         <Route exact path="/content" component={Content} />
         <Route exact path="/team" component={Team} />
@@ -39,6 +39,13 @@ const Router = () => {
         <ProtectedRoute
           path="/student/class-sign-in"
           component={ClassSignIn}
+          permissions={['student']}
+          exact
+          isPrivate
+        />
+        <ProtectedRoute
+          path="/student/quiz"
+          component={Quiz}
           permissions={['student']}
           exact
           isPrivate
