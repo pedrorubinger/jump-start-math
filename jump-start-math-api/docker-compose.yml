@@ -1,6 +1,16 @@
 version: "3"
 
 services:
+  postgres:
+    image: postgres:11
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=jsm
+      - POSTGRES_PASSWORD=123
+
   mongo:
     image: mongo
     ports:
@@ -9,4 +19,5 @@ services:
       - mongo:/data/db
 
 volumes:
+  postgres:
   mongo:
