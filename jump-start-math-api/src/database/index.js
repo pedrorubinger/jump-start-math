@@ -1,8 +1,25 @@
+const Sequelize = require('sequelize');
 const mongoose = require('mongoose');
+
+const databaseConfig = require('../config/database');
+
+const Question = require('../models/Question');
+const Attempt = require('../models/Attempt');
+
+const models = [Question, Attempt];
 
 class Database {
   constructor() {
+    this.init();
     this.mongo();
+  }
+
+  init() {
+    this.connection = new Sequelize(databaseConfig);
+
+    models
+      .map(model => model.init(this.connection))
+      .map(model => model.associate && model.associate(this.connection.models));
   }
 
   mongo() {
@@ -11,14 +28,6 @@ class Database {
       useFindAndModify: true,
       useUnifiedTopology: true,
     });
-
-    const db = mongoose.connection;
-
-    db.on(
-      'error',
-      (error) => console.log('Error trying to connect to database:', error)
-    );
-    db.once('open', () => console.log('MongoDB: Successfully connected.'));
   }
 }
 
