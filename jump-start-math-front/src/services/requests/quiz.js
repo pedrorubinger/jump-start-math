@@ -1,7 +1,7 @@
 import api from '../api';
 
 export const sendQuestion = (data) => 
-  console.log({
+  api.request({
     url: '/questions',
     method: 'POST',
     data

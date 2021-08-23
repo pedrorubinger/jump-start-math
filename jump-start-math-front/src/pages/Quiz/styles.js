@@ -10,13 +10,6 @@ export const Container = styled.div`
   margin-top: 20px;
 `;
 
-
-export const FooterContainer = styled.div`
-  width: 100%;
-  position: fixed;
-  bottom: 0;
-`;
-
 export const Text = styled.p`
   font-size: 1.4rem;
   max-width: 45%;

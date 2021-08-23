@@ -22,32 +22,20 @@ export default class QuestionsGenerator {
 
     return [q1, q2, q3];
   }
-
+  
   generateQuestion1(){
-    let side;
-    
-    do{
-      side = Math.round(Math.random() * 100);
-    }while(side === 0);
-    
-    const text = `Descubra a área do triângulo equilátero com lado de ${side}cm. Não se esqueça de sempre usar números com, no máximo, duas casas decimais.`;
-
-    return {text, values: { side }};
-  }
-
-  generateQuestion2(){
     let radius;
     
     do{
       radius = Math.round(Math.random() * 50);
     }while(radius === 0);
-
-    const text = `Informe a área da circunferência sabendo que o raio é igual a ${radius}cm. Não se esqueça de sempre usar números com, no máximo, duas casas decimais.`;
+    
+    const text = `Informe a área da circunferência sabendo que o raio é igual a ${radius}cm.`;
     
     return {text, values: { radius }};
   }
 
-  generateQuestion3(){
+  generateQuestion2(){
     let radius;
     let height;
     
@@ -56,9 +44,21 @@ export default class QuestionsGenerator {
       height= Math.round(Math.random() * 100);
     }while(radius === 0 || height === 0);
 
-    const text = `Informe a área do cilíndro, sabendo que seu raio é igual a ${radius}cm e sua altura mede ${height}cm. Não se esqueça de sempre usar números com, no máximo, duas casas decimais.`;
+    const text = `Informe o volume do cilíndro, sabendo que seu raio é igual a ${radius}cm e sua altura mede ${height}cm.`;
     
     return {text, values: { radius, height }};
+  }
+
+  generateQuestion3(){
+    let side;
+    
+    do{
+      side = Math.round(Math.random() * 100);
+    }while(side === 0);
+    
+    const text = `Descubra a área do triângulo equilátero com lado de ${side}cm.`;
+
+    return {text, values: { side }};
   }
 
 }

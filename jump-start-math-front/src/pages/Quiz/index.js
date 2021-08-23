@@ -14,7 +14,7 @@ import { Container, FooterContainer, Text } from "./styles";
 import QuestionsGenerator from "../../services/questions/generation";
 
 const Quiz = () => {
-  const { user } = useSelector((state) => state.User)
+  const { user } = useSelector((state) => state.User);
   const [questionStartTime, setQuestionStartTime] = useState(new Date());
   const [answer, setAnswer] = useState("");
   const [isLoading, setIsLoading] = useState(true);
@@ -40,42 +40,41 @@ const Quiz = () => {
       sendQuestion({
         enunciado: current.text,
         nivel: current.nivel,
-        resposta: answer,
-        values: current.values,
-        tempoGasto: questions[current.id].time,
+        resposta: parseFloat(answer),
+        valores: current.values,
+        tempoGasto: (questions[current.id].time/60000),
       });
-      
+
       setAnswer("");
       setCurrent(questions[current.id + 1]);
       setQuestionStartTime(new Date());
       setIsLoading(false);
     } else {
-      
       questions[current.id].time = Math.abs(new Date() - questionStartTime);
 
       sendQuestion({
         enunciado: current.text,
         nivel: current.nivel,
-        resposta: answer,
-        values: current.values,
-        tempoGasto: questions[current.id].time,
+        resposta: parseFloat(answer),
+        valores: current.values,
+        tempoGasto: (questions[current.id].time/60000),
       });
-      
+
       setIsFinished(true);
     }
   };
-  
+
   const finishTry = () => {
     let fullTime = 0;
 
-    for(let i = 0; i < questions.length; i++){
+    for (let i = 0; i < questions.length; i++) {
       fullTime += questions[i].time;
       console.log(fullTime, questions[i].time);
     }
-    
+
     console.log(fullTime);
-  }
-  
+  };
+
   return (
     <>
       <Header />
@@ -85,12 +84,16 @@ const Quiz = () => {
       <Container>
         {isLoading ? (
           "Carregando..."
+        ) : isFinished ? (
+          <h1>Acabou</h1>
         ) : (
-          isFinished ? (
-            <h1>Acabou</h1>
-          ) : (
           <>
-            <Text>{current.text}</Text>
+            <Text>
+              {current.text}
+              <br />
+              Não se esqueça de sempre usar números com, no máximo, duas casas
+              decimais.
+            </Text>
 
             <StyledForm
               onSubmit={() => {
@@ -113,11 +116,9 @@ const Quiz = () => {
               </FormGroup>
             </StyledForm>
           </>
-        ))}
+        )}
       </Container>
-      <FooterContainer>
-        <Footer />
-      </FooterContainer>
+      <Footer />
     </>
   );
 };
