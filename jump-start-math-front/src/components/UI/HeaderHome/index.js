@@ -125,6 +125,7 @@ function HeaderHome() {
           <>
             {/* Aqui entram todas as rotas do aluno... */}
             <StyledLink to="/student/class-sign-in">Matricular-se</StyledLink>
+            <StyledLink to="/student">Área Restrita</StyledLink>
           </>
         );
       default:

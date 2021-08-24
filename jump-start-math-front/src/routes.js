@@ -11,6 +11,7 @@ import Quiz from './pages/Quiz';
 import Team from './pages/Team';
 import Technologies from './pages/Technologies';
 import ProtectedRoute from './components/ProtectecRoute';
+import Student from './pages/Student';
 
 const Router = () => {
   return (
@@ -46,6 +47,13 @@ const Router = () => {
         <ProtectedRoute
           path="/student/quiz"
           component={Quiz}
+          permissions={['student']}
+          exact
+          isPrivate
+        />
+        <ProtectedRoute
+          path="/student"
+          component={Student}
           permissions={['student']}
           exact
           isPrivate
