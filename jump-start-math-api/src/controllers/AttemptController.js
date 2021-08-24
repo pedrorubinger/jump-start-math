@@ -3,7 +3,9 @@ const Question = require('../models/Question');
 
 class AttemptController {
   async store(req, res) {
-    const {id,tempoTentativa} = await Attempt.create(req.body);
+    const {id,tempoTentativa} = await Attempt.create(req.body).catch(err => {
+      console.log(err);
+    });
 
     return res.json({id, tempoTentativa});
   }

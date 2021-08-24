@@ -15,3 +15,11 @@ export const Text = styled.p`
   max-width: 45%;
   text-align: center;
 `;
+
+export const Error = styled.p`
+  margin: 0.4rem 0 0;
+  font-size: 0.8rem;
+  width: 100%;
+  text-align: left;
+  color: red;
+`;

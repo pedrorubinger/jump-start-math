@@ -8,7 +8,7 @@ export const sendQuestion = (data) =>
   });
 
 export const sendAttempt = (data) => 
-  console.log({
+  api.request({
     url: '/attempts',
     method: 'POST',
     data

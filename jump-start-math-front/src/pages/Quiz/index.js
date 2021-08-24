@@ -9,7 +9,7 @@ import Label from "../../components/UI/Label";
 import Titles from "../../components/UI/Titles";
 import { sendQuestion, sendAttempt } from "../../services/requests/quiz";
 import { StyledForm } from "../../components/Forms/ContactForm/styles";
-import { Container, FooterContainer, Text } from "./styles";
+import { Container, Text, Error } from "./styles";
 
 import QuestionsGenerator from "../../services/questions/generation";
 
@@ -19,6 +19,7 @@ const Quiz = () => {
   const [answer, setAnswer] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [isFinished, setIsFinished] = useState(false);
+  const [error, setError] = useState(false);
   const [questions, setQuestions] = useState([]);
   const [current, setCurrent] = useState({});
 
@@ -32,6 +33,13 @@ const Quiz = () => {
   }, []);
 
   const handleSubmit = async () => {
+    if (!answer) {
+      setError(true);
+      return;
+    } else {
+      setError(false);
+    }
+    
     if (current.id < questions.length - 1) {
       setIsLoading(true);
 
@@ -40,27 +48,27 @@ const Quiz = () => {
       const { data } = await sendQuestion({
         enunciado: current.text,
         nivel: current.nivel,
-        resposta: parseFloat(answer.replace(',', '.')),
+        resposta: parseFloat(answer.replace(",", ".")),
         valores: current.values,
-        tempoGasto: (questions[current.id].time/60000),
+        tempoGasto: questions[current.id].time / 60000,
       });
 
       questions[current.id].dbId = data.id;
-      console.log(data);
 
       setAnswer("");
       setCurrent(questions[current.id + 1]);
       setQuestionStartTime(new Date());
       setIsLoading(false);
+
     } else {
       questions[current.id].time = Math.abs(new Date() - questionStartTime);
 
       const { data } = await sendQuestion({
         enunciado: current.text,
         nivel: current.nivel,
-        resposta: parseFloat(answer.replace(',', '.')),
+        resposta: parseFloat(answer.replace(",", ".")),
         valores: current.values,
-        tempoGasto: (questions[current.id].time/60000),
+        tempoGasto: questions[current.id].time / 60000,
       });
 
       questions[current.id].dbId = data.id;
@@ -69,15 +77,22 @@ const Quiz = () => {
     }
   };
 
-  const finishTry = () => {
+  const finishTry = async () => {
     let fullTime = 0;
 
     for (let i = 0; i < questions.length; i++) {
       fullTime += questions[i].time;
-      console.log(fullTime, questions[i].time);
     }
 
-    console.log(fullTime);
+    const { data } = await sendAttempt({
+      userId: user.id,
+      userName: user.name,
+      classId: "Classe1",
+      question1Id: questions[0].dbId,
+      question2Id: questions[1].dbId,
+      question3Id: questions[2].dbId,
+      tempoTentativa: fullTime / 6000,
+    });
   };
 
   return (
@@ -92,6 +107,7 @@ const Quiz = () => {
         ) : isFinished ? (
           <>
             <h2>Você finalizou sua tentativa</h2>
+            <Button onClick={() => finishTry()}>Finalizar Tentativa</Button>
           </>
         ) : (
           <>
@@ -117,6 +133,7 @@ const Quiz = () => {
                   step="0.01"
                   onChange={(e) => setAnswer(e.target.value)}
                 />
+                {error && <Error>Você deve digitar uma resposta</Error>}
               </FormGroup>
               <FormGroup>
                 <Button type="submit">Responder</Button>
