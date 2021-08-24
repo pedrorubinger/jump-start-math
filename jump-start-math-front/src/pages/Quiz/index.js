@@ -39,7 +39,7 @@ const Quiz = () => {
     } else {
       setError(false);
     }
-    
+
     if (current.id < questions.length - 1) {
       setIsLoading(true);
 
@@ -59,7 +59,6 @@ const Quiz = () => {
       setCurrent(questions[current.id + 1]);
       setQuestionStartTime(new Date());
       setIsLoading(false);
-
     } else {
       questions[current.id].time = Math.abs(new Date() - questionStartTime);
 
@@ -84,7 +83,7 @@ const Quiz = () => {
       fullTime += questions[i].time;
     }
 
-    const { data } = await sendAttempt({
+    await sendAttempt({
       userId: user.id,
       userName: user.name,
       classId: "Classe1",
@@ -106,8 +105,16 @@ const Quiz = () => {
           "Carregando..."
         ) : isFinished ? (
           <>
-            <h2>Você finalizou sua tentativa</h2>
-            <Button onClick={() => finishTry()}>Finalizar Tentativa</Button>
+            <StyledForm
+              onSubmit={() => {
+                finishTry();
+              }}
+            >
+              <h2>Você finalizou sua tentativa</h2>
+              <FormGroup>
+                <Button type="submit">Finalizar Tentativa</Button>
+              </FormGroup>
+            </StyledForm>
           </>
         ) : (
           <>
