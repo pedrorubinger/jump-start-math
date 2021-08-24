@@ -9,7 +9,13 @@ import Label from "../../components/UI/Label";
 import Titles from "../../components/UI/Titles";
 import { sendQuestion, sendAttempt } from "../../services/requests/quiz";
 import { StyledForm } from "../../components/Forms/ContactForm/styles";
-import { Container, Text, Error } from "./styles";
+import {
+  Container,
+  Text,
+  Error,
+  ModalBackground,
+  ModalContainer,
+} from "./styles";
 
 import QuestionsGenerator from "../../services/questions/generation";
 
@@ -19,9 +25,11 @@ const Quiz = () => {
   const [answer, setAnswer] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [isFinished, setIsFinished] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [error, setError] = useState(false);
   const [questions, setQuestions] = useState([]);
   const [current, setCurrent] = useState({});
+  const [currentData, setCurrentData] = useState({});
 
   useEffect(() => {
     (() => {
@@ -31,6 +39,8 @@ const Quiz = () => {
       setIsLoading(false);
     })();
   }, []);
+
+  const nextQuestion = () => {};
 
   const handleSubmit = async () => {
     if (!answer) {
@@ -52,6 +62,7 @@ const Quiz = () => {
         valores: current.values,
         tempoGasto: questions[current.id].time / 60000,
       });
+      setCurrentData(data);
 
       questions[current.id].dbId = data.id;
 
@@ -59,6 +70,7 @@ const Quiz = () => {
       setCurrent(questions[current.id + 1]);
       setQuestionStartTime(new Date());
       setIsLoading(false);
+      setShowModal(true);
     } else {
       questions[current.id].time = Math.abs(new Date() - questionStartTime);
 
@@ -69,10 +81,12 @@ const Quiz = () => {
         valores: current.values,
         tempoGasto: questions[current.id].time / 60000,
       });
+      setCurrentData(data);
 
       questions[current.id].dbId = data.id;
 
       setIsFinished(true);
+      setShowModal(true);
     }
   };
 
@@ -86,7 +100,6 @@ const Quiz = () => {
     await sendAttempt({
       userId: user.id,
       userName: user.name,
-      classId: "Classe1",
       question1Id: questions[0].dbId,
       question2Id: questions[1].dbId,
       question3Id: questions[2].dbId,
@@ -150,7 +163,49 @@ const Quiz = () => {
         )}
       </Container>
       <Footer />
+      {showModal && (
+        <ResultModal
+          data={currentData}
+          closeModal={setShowModal}
+          nextQuestion={nextQuestion()}
+        />
+      )}
     </>
+  );
+};
+
+const ResultModal = ({ data, closeModal }) => {
+  useEffect(() => {
+    console.log(data);
+    document.addEventListener("keydown", handleKeyDown, false);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown, false);
+    };
+  });
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Escape") closeModal(false);
+  };
+
+  const handleOutsideClick = (e) => {
+    let element = e.target;
+    if (element.id === "modal-background") closeModal(false);
+  };
+  return (
+    <ModalBackground
+      id="modal-background"
+      onClick={(e) => handleOutsideClick(e)}
+    >
+      <ModalContainer>
+        <h2>Você {data?.acerto ? "acertou" : "errou"} a questão.</h2>
+        <Text>A resposta é {data.respostaEsperada} </Text>
+        <StyledForm onSubmit={() => closeModal(false)}>
+          <FormGroup>
+            <Button type="submit">Continuar</Button>
+          </FormGroup>
+        </StyledForm>
+      </ModalContainer>
+    </ModalBackground>
   );
 };
 
