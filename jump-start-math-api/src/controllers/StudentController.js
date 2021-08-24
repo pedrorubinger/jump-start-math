@@ -22,6 +22,17 @@ class StudentController {
 
 
   }
+
+  async index(req, res) {
+    const user = await User.findById(req.userId);
+
+    if (user.classroom == null) {
+      return res.json({hasClassroom: false});
+    }
+    else {
+      return res.json({hasClassroom: true});
+    }
+  }
 }
 
 module.exports = new StudentController();

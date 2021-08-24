@@ -29,6 +29,7 @@ Router.use(authMiddleware);
 
 /* Student */
 Router.put('/students', StudentController.update);
+Router.get('/students', StudentController.index);
 
 
 /* CLASSROOM */

@@ -20,3 +20,10 @@ export const signIn = (data) =>
     method: 'POST',
     data,
   });
+
+export const userHasClass = (data) =>
+  api.request({
+    url: '/students',
+    method: 'GET',
+    data,
+  });

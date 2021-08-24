@@ -8,6 +8,7 @@ import { Container } from '../Reports/Classes/styles';
 import ListHeader from '../../components/UI/ListHeader';
 import { getUserAttempts } from '../../services/requests/report';
 import { Redirect } from 'react-router-dom';
+import { userHasClass } from '../../services/requests/users';
 
 export default function Student(match){
  
@@ -15,7 +16,7 @@ export default function Student(match){
   const [avgAttemptsTime, setAvgAttemptsTime] = useState(0);
   const { id } = useSelector((state) => state.User);
   const [hasError, setHasError] = useState(false);
-  const [hasClass, setHasClass] = useState(true);
+  const [hasClass, setHasClass] = useState(null);
   const [goToTry, setGoToTry] = useState(false);
 
   const columns = [
@@ -59,8 +60,11 @@ export default function Student(match){
       try{
         const response = await getUserAttempts(id);
 
-        // const responseIfClass = await 
-        // responseIfClass
+        const responseIfClass = await userHasClass();
+        if(responseIfClass)
+          setHasClass(true);
+        else
+          setHasClass(false);
 
         if (response.data?.length) {
           const attemptsTime = [];
