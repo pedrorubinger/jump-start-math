@@ -18,7 +18,7 @@ class QuestionController {
         respostaEsperada: resolved.respostaEsperada,
         acerto: resolved.acerto,
         tempoGasto: resolved.tempoGasto
-      });
+      }).catch(err => console.log(err));
 
     return res.json({ id, enunciado, respostaEsperada, acerto, tempoGasto });
   }

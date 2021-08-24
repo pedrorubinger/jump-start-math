@@ -31,19 +31,22 @@ const Quiz = () => {
     })();
   }, []);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (current.id < questions.length - 1) {
       setIsLoading(true);
 
       questions[current.id].time = Math.abs(new Date() - questionStartTime);
 
-      sendQuestion({
+      const { data } = await sendQuestion({
         enunciado: current.text,
         nivel: current.nivel,
-        resposta: parseFloat(answer),
+        resposta: parseFloat(answer.replace(',', '.')),
         valores: current.values,
         tempoGasto: (questions[current.id].time/60000),
       });
+
+      questions[current.id].dbId = data.id;
+      console.log(data);
 
       setAnswer("");
       setCurrent(questions[current.id + 1]);
@@ -52,13 +55,15 @@ const Quiz = () => {
     } else {
       questions[current.id].time = Math.abs(new Date() - questionStartTime);
 
-      sendQuestion({
+      const { data } = await sendQuestion({
         enunciado: current.text,
         nivel: current.nivel,
-        resposta: parseFloat(answer),
+        resposta: parseFloat(answer.replace(',', '.')),
         valores: current.values,
         tempoGasto: (questions[current.id].time/60000),
       });
+
+      questions[current.id].dbId = data.id;
 
       setIsFinished(true);
     }
@@ -85,7 +90,9 @@ const Quiz = () => {
         {isLoading ? (
           "Carregando..."
         ) : isFinished ? (
-          <h1>Acabou</h1>
+          <>
+            <h2>Você finalizou sua tentativa</h2>
+          </>
         ) : (
           <>
             <Text>
