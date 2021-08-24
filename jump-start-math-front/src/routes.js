@@ -7,6 +7,7 @@ import ClassSignIn from './pages/ClassSignIn';
 import Classes from './pages/Classes';
 import ClassesReports from './pages/Reports/Classes';
 import Home from './pages/Home';
+import Quiz from './pages/Quiz';
 import Team from './pages/Team';
 import Technologies from './pages/Technologies';
 import ProtectedRoute from './components/ProtectecRoute';
@@ -16,6 +17,7 @@ const Router = () => {
     <BrowserRouter>
       <Switch>
         <Route exact path="/" component={Home} />
+        {/* <Route exact path="/quiz" component={Quiz} /> */}
         <Route exact path="/contact" component={Contact} />
         <Route exact path="/content" component={Content} />
         <Route exact path="/team" component={Team} />
@@ -37,6 +39,13 @@ const Router = () => {
         <ProtectedRoute
           path="/student/class-sign-in"
           component={ClassSignIn}
+          permissions={['student']}
+          exact
+          isPrivate
+        />
+        <ProtectedRoute
+          path="/student/quiz"
+          component={Quiz}
           permissions={['student']}
           exact
           isPrivate

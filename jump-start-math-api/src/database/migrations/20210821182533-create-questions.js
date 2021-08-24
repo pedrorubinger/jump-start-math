@@ -14,7 +14,6 @@ module.exports = {
       nivel: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        unique: true,
       },
       resposta: {
         type: Sequelize.STRING,
