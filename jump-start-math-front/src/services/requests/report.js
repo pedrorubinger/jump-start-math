@@ -5,3 +5,9 @@ export const getClassroomReport = (id) =>
     url: `/attempts/${id}`,
     method: 'GET',
   });
+
+export const getUserAttempts = (id) =>
+  api.request({
+    url: `/userattempts/${id}`,
+    method: 'GET'
+  });
