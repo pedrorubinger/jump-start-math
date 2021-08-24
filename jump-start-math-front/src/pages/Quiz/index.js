@@ -86,7 +86,6 @@ const Quiz = () => {
     await sendAttempt({
       userId: user.id,
       userName: user.name,
-      classId: "Classe1",
       question1Id: questions[0].dbId,
       question2Id: questions[1].dbId,
       question3Id: questions[2].dbId,
