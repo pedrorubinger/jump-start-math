@@ -24,7 +24,7 @@ const Router = () => {
         <Route exact path="/team" component={Team} />
         <Route exact path="/technologies" component={Technologies} />
         <Route
-          path="/teacher/class/report"
+          path="/teacher/class/report/:classId"
           component={ClassesReports}
           permissions={['teacher']}
           exact

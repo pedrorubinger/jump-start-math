@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Modal } from 'react-bootstrap';
 import { Table } from 'antd';
-import { Redirect, useHistory } from 'react-router-dom';
+import { Redirect, useHistory, useParams } from 'react-router-dom';
 
 import { Container } from './styles';
 import Header from '../../../components/UI/Header';
@@ -12,13 +12,13 @@ import Swal from 'sweetalert2';
 import { getClassroomReport } from '../../../services/requests/report';
 
 const ClassesReports = () => {
+  const params = useParams();
   const [hasError, setHasError] = useState(false);
   const [records, setRecords] = useState([]);
   const [avgAttemptsTime, setAvgAttemptsTime] = useState(0);
   const [isFetching, setIsFetching] = useState(true);
   const { location } = useHistory();
   const [individualReport, setIndividualReportModal] = useState(null);
-  const id = location?.state?.id;
   // const fakeRecords = [
   //   {
   //     id: 1,
@@ -103,7 +103,7 @@ const ClassesReports = () => {
   useEffect(() => {
     (async () => {
       try {
-        const response = await getClassroomReport(id);
+        const response = await getClassroomReport(params.classId);
 
         if (response.data?.length) {
           const attemptsTime = [];
@@ -146,9 +146,9 @@ const ClassesReports = () => {
         setIsFetching(false);
       }
     })();
-  }, [id]);
+  }, [params.classId]);
 
-  if (!id) {
+  if (!params.classId) {
     return <Redirect to="/teacher/classes" />;
   }
 

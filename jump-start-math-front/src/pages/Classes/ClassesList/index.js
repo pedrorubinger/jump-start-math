@@ -106,7 +106,7 @@ const ClassesList = ({ records = [], setRecords, teacherId }) => {
           <ActionButton
             title="Clique para ver o relatório desta turma"
             style={{ marginLeft: 5 }}
-            onClick={() => history.push('/teacher/class/report', {
+            onClick={() => history.push(`/teacher/class/report/${record.code}`, {
               id: record._id,
             })}
           >
