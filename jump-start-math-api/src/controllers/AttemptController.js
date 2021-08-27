@@ -1,23 +1,25 @@
 const Attempt = require("../models/Attempt");
 const Question = require("../models/Question");
+const Classroom = require("../schemas/Classroom");
 const User = require("../schemas/User");
 
 class AttemptController {
   async store(req, res) {
-    const user = await User.findById(req.userId);
+      const user = await User.findById(req.body.userId);
 
-    const { id, tempoTentativa } = await Attempt.create({
-      userId: req.body.userId,
-      userName: req.body.userName,
-      classId: user.classroom,
-      question1Id: req.body.question1Id,
-      question2Id: req.body.question2Id,
-      question3Id: req.body.question3Id,
-      tempoTentativa: req.body.tempoTentativa,
-    });
+      const { id, tempoTentativa } = await Attempt.create({
+        userId: req.body.userId,
+        userName: req.body.userName,
+        classId: user.classroom,
+        question1Id: req.body.question1Id,
+        question2Id: req.body.question2Id,
+        question3Id: req.body.question3Id,
+        tempoTentativa: req.body.tempoTentativa,
+      }).catch(err => res.status(400).json({ error: err }));
+
 
     return res.json({ id, tempoTentativa });
-  }
+  };
 
   async index(req, res) {
     const attempts = await Attempt.findAll({

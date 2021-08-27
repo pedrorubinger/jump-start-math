@@ -18,9 +18,9 @@ class Attempt extends Model {
   }
 
   static associate(models) {
-    this.belongsTo(models.Question, { foreignKey: 'question1Id', as: 'question1' });
-    this.belongsTo(models.Question, { foreignKey: 'question2Id', as: 'question2' });
-    this.belongsTo(models.Question, { foreignKey: 'question3Id', as: 'question3' });
+    this.belongsTo(models.Question, { foreignKey: 'question1Id', as: 'question1', unique: true });
+    this.belongsTo(models.Question, { foreignKey: 'question2Id', as: 'question2', unique: true });
+    this.belongsTo(models.Question, { foreignKey: 'question3Id', as: 'question3', unique: true });
   }
 }
 

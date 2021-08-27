@@ -14,7 +14,7 @@ export default function Student(match){
  
   const [records, setRecords] = useState([]);
   const [avgAttemptsTime, setAvgAttemptsTime] = useState(0);
-  const { id } = useSelector((state) => state.User);
+  const { user } = useSelector((state) => state.User);
   const [hasError, setHasError] = useState(false);
   const [hasClass, setHasClass] = useState(null);
   const [goToTry, setGoToTry] = useState(false);
@@ -58,7 +58,7 @@ export default function Student(match){
   useEffect(()=>{
     (async()=> {
       try{
-        const response = await getUserAttempts(id);
+        const response = await getUserAttempts(user.id);
 
         const responseIfClass = await userHasClass();
         if(responseIfClass)

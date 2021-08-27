@@ -32,9 +32,12 @@ const ClassSignIn = () => {
     try {
       await classSignInSchema.validate(values, { abortEarly: false });
 
-      const userId = user?.id;
-      const data = { classroom: values.class_code };
-      const response = await signInClass(userId, data);
+      // const userId = user?.id;
+      // const data = { classroom: values };
+
+      console.log(user?.id, values);
+
+      const response = await signInClass({userId: user?.id, classroom: values.classroom_code });
 
       console.log('response:', response);
 
