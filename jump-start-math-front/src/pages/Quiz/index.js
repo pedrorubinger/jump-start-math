@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { Redirect } from "react-router";
 import Header from "../../components/UI/Header";
 import Footer from "../../components/UI/Footer";
 import FormGroup from "../../components/UI/FormGroup";
@@ -27,6 +28,7 @@ const Quiz = () => {
   const [isFinished, setIsFinished] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [error, setError] = useState(false);
+  const [redirect, setRedirect] = useState(false);
   const [questions, setQuestions] = useState([]);
   const [current, setCurrent] = useState({});
   const [currentData, setCurrentData] = useState({});
@@ -105,6 +107,8 @@ const Quiz = () => {
       question3Id: questions[2].dbId,
       tempoTentativa: fullTime / 6000,
     });
+
+    setRedirect(true);
   };
 
   return (
@@ -163,6 +167,7 @@ const Quiz = () => {
         )}
       </Container>
       <Footer />
+      { redirect && <Redirect to="/student" /> }
       {showModal && (
         <ResultModal
           data={currentData}
