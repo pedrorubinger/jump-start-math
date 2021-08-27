@@ -28,7 +28,8 @@ const resolveQuestion1 = (resposta, { radius }) => {
 }
 
 const resolveQuestion2 = (resposta, { radius, height }) => {
-  const area = parseFloat((3.14 * radius**2).toFixed(2)) * height;
+  const circleArea = parseFloat((3.14 * radius**2).toFixed(2));
+  const area = parseFloat((circleArea * height).toFixed(2));
   
   return { respostaEsperada: area, acerto: resposta === area }
 }
